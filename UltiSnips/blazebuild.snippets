@@ -1,0 +1,15 @@
+priority -30
+
+snippet proto_lib "Proto Library" b
+proto_library(
+    name = "${1:name}_proto",
+    srcs = ["$1.proto"],
+    cc_api_version = 2,
+    java_api_version = 2,
+    py_api_version = 2,
+    deps = [
+        $2
+    ],
+    alwayslink = 1,
+)
+endsnippet
