@@ -4,4 +4,4 @@
 " vim needs to wait for some time in case '=' is
 " pressed after <leader>w. Is that a better way to
 " avoid this?
-unmap <leader>w=
+silent! unmap <leader>w=
