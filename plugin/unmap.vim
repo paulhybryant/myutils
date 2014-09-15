@@ -5,3 +5,4 @@
 " pressed after <leader>w. Is that a better way to
 " avoid this?
 silent! unmap <leader>w=
+silent! unmap <leader>m=
