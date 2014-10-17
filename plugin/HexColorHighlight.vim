@@ -195,7 +195,6 @@ function! <SID>rgb(rgb)
   return <SID>color(l:r, l:g, l:b)
 endfunction
 
-map <Leader>hh :call <SID>HexHighlight()<CR>
 function! <SID>HexHighlight()
   if !((&t_Co == 256) || has("gui_running"))
     echo "t_Co must be set to 256 or vim must be in gui mode."
@@ -232,3 +231,5 @@ function! <SID>HexHighlight()
     let s:HexColored = 0
   endif
 endfunction
+
+map <Leader>hh :call <SID>HexHighlight()<CR>
