@@ -170,6 +170,23 @@ function! <SID>SetupTablineMappingForLinux()
     endif
 endfunction
 nnoremap <leader>kl :call <SID>SetupTablineMappingForLinux()<CR>
+
+if g:statusline_use_airline && exists('g:airline#extensions#tabline#buffer_idx_mode')
+    if len($SSH_CLIENT) > 0
+        if $SSH_OS == "Darwin"
+            call <SID>SetupTablineMappingForMac()
+        elseif $SSH_OS == "Linux"
+            call <SID>SetupTablineMappingForLinux()
+        endif
+    else
+        if OSX()
+            call <SID>SetupTablineMappingForMac()
+        elseif LINUX()
+            call <SID>SetupTablineMappingForLinux()
+        endif
+    endif
+endif
+
 " }}
 
 
