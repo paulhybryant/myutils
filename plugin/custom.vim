@@ -1,6 +1,6 @@
 " hi Search term=reverse ctermfg=0 ctermbg=13 guibg=#BBBB00
 " hi IncSearch term=reverse ctermbg=11 gui=reverse
-hi Todo term=standout ctermbg=0 ctermfg=0 guifg=Yellow guibg=Black
+hi Todo term=standout ctermbg=None ctermfg=14 guifg=Yellow guibg=Black
 
 cnoreabbrev q qa
 
