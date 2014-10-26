@@ -109,6 +109,17 @@ nnoremap <Enter> o<ESC>
 silent! unmap <leader>w=
 silent! unmap <leader>m=
 
+" Improve completion popup menu
+" http://vim.wikia.com/wiki/Improve_completion_popup_menu
+inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
+inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
+inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
+inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
+inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
+inoremap <expr> <C-d> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<C-d>"
+inoremap <expr> <C-u> pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
+
 " Unused, use vim-airline for fast buffer switching instead
 " Switch tabs by press alt + tabid
 " NORMAL mode bindings for vim(terminal mode)
