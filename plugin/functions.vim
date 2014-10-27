@@ -229,39 +229,3 @@ function! s:DechoCmd(cmd)
 endfunction
 command! -nargs=+ -complete=command DC call s:DechoCmd(<q-args>)
 " }}"
-
-" @Deprecated {{
-    " This plugin actually makes press up / down in search mode adding a
-    " new line and breaks the functionality.
-    " Plugin 'vim-scripts/SearchComplete'
-
-    " Increase the number of a selected block {{
-    " Deprecated by Dr. Chip's Visual Incrementing plugin
-    " function! <SID>Incr()
-        " let l:a = line('.') - line("'<")
-        " let l:c = virtcol("'<")
-        " if l:a > 0
-            " Decho 'normal! '.l:c.'|'.l:a."\<C-a>"
-            " execute 'normal! '.l:c.'|'.l:a."\<C-a>"
-        " endif
-        " normal `<
-    " endfunction
-    " vnoremap <C-y> :call <SID>Incr()<CR>
-    " }}
-
-    " vim-expand-region is a better one for this purpose
-    " wildfire {{
-        " Plugin 'gcmt/wildfire.vim'
-        " vmap <BS> <Plug>(wildfire-water)
-        " map <SPACE> <Plug>(wildfire-fuel)
-        " let g:wildfire_objects = {
-            " \ "*" : ["i'", 'i"', "i)", "i]", "i}"]
-        " \ }
-
-        " " As you can see, to add additional mappings we have to follow a simple convention
-        " map <ENTER> <Plug>(wildfire-fuel:tags)
-        " let g:wildfire_objects_tags = {
-            " \ "html,xml" : ["at", "it"],
-        " \ }
-    " }}
-" }}

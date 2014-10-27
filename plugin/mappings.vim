@@ -1,3 +1,6 @@
+" Disable key to enter ex mode
+nnoremap Q <nop>
+
 " Wrapped lines goes down/up to next row, rather than next line in file.
 nnoremap j gj
 nnoremap k gk
