@@ -134,39 +134,39 @@ command! -nargs=+ InsertRepeated call <SID>InsertRepeated(<f-args>)
 
 " functions for settping up tabline mappsing for different OSes {{
 function! <SID>SetupTablineMappingForMac()
-    nmap <unique> ¡ <Plug>AirlineSelectTab1
-    nmap <unique> ™ <Plug>AirlineSelectTab2
-    nmap <unique> £ <Plug>AirlineSelectTab3
-    nmap <unique> ¢ <Plug>AirlineSelectTab4
-    nmap <unique> ∞ <Plug>AirlineSelectTab5
-    nmap <unique> § <Plug>AirlineSelectTab6
-    nmap <unique> ¶ <Plug>AirlineSelectTab7
-    nmap <unique> • <Plug>AirlineSelectTab8
-    nmap <unique> ª <Plug>AirlineSelectTab9
+    silent! nmap <silent> <unique> ¡ <Plug>AirlineSelectTab1
+    silent! nmap <silent> <unique> ™ <Plug>AirlineSelectTab2
+    silent! nmap <silent> <unique> £ <Plug>AirlineSelectTab3
+    silent! nmap <silent> <unique> ¢ <Plug>AirlineSelectTab4
+    silent! nmap <silent> <unique> ∞ <Plug>AirlineSelectTab5
+    silent! nmap <silent> <unique> § <Plug>AirlineSelectTab6
+    silent! nmap <silent> <unique> ¶ <Plug>AirlineSelectTab7
+    silent! nmap <silent> <unique> • <Plug>AirlineSelectTab8
+    silent! nmap <silent> <unique> ª <Plug>AirlineSelectTab9
 endfunction
 nnoremap <leader>km :call <SID>SetupTablineMappingForMac()<CR>
 
 function! <SID>SetupTablineMappingForLinux()
     if has('gui_running')
-        nmap <unique> <M-1> <Plug>AirlineSelectTab1
-        nmap <unique> <M-2> <Plug>AirlineSelectTab2
-        nmap <unique> <M-3> <Plug>AirlineSelectTab3
-        nmap <unique> <M-4> <Plug>AirlineSelectTab4
-        nmap <unique> <M-5> <Plug>AirlineSelectTab5
-        nmap <unique> <M-6> <Plug>AirlineSelectTab6
-        nmap <unique> <M-7> <Plug>AirlineSelectTab7
-        nmap <unique> <M-8> <Plug>AirlineSelectTab8
-        nmap <unique> <M-9> <Plug>AirlineSelectTab9
+        silent! nmap <silent> <unique> <M-1> <Plug>AirlineSelectTab1
+        silent! nmap <silent> <unique> <M-2> <Plug>AirlineSelectTab2
+        silent! nmap <silent> <unique> <M-3> <Plug>AirlineSelectTab3
+        silent! nmap <silent> <unique> <M-4> <Plug>AirlineSelectTab4
+        silent! nmap <silent> <unique> <M-5> <Plug>AirlineSelectTab5
+        silent! nmap <silent> <unique> <M-6> <Plug>AirlineSelectTab6
+        silent! nmap <silent> <unique> <M-7> <Plug>AirlineSelectTab7
+        silent! nmap <silent> <unique> <M-8> <Plug>AirlineSelectTab8
+        silent! nmap <silent> <unique> <M-9> <Plug>AirlineSelectTab9
     else
-        nmap <unique> 1 <Plug>AirlineSelectTab1
-        nmap <unique> 2 <Plug>AirlineSelectTab2
-        nmap <unique> 3 <Plug>AirlineSelectTab3
-        nmap <unique> 4 <Plug>AirlineSelectTab4
-        nmap <unique> 5 <Plug>AirlineSelectTab5
-        nmap <unique> 6 <Plug>AirlineSelectTab6
-        nmap <unique> 7 <Plug>AirlineSelectTab7
-        nmap <unique> 8 <Plug>AirlineSelectTab8
-        nmap <unique> 9 <Plug>AirlineSelectTab9
+        silent! nmap <silent> <unique> 1 <Plug>AirlineSelectTab1
+        silent! nmap <silent> <unique> 2 <Plug>AirlineSelectTab2
+        silent! nmap <silent> <unique> 3 <Plug>AirlineSelectTab3
+        silent! nmap <silent> <unique> 4 <Plug>AirlineSelectTab4
+        silent! nmap <silent> <unique> 5 <Plug>AirlineSelectTab5
+        silent! nmap <silent> <unique> 6 <Plug>AirlineSelectTab6
+        silent! nmap <silent> <unique> 7 <Plug>AirlineSelectTab7
+        silent! nmap <silent> <unique> 8 <Plug>AirlineSelectTab8
+        silent! nmap <silent> <unique> 9 <Plug>AirlineSelectTab9
     endif
 endfunction
 nnoremap <leader>kl :call <SID>SetupTablineMappingForLinux()<CR>
