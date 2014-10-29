@@ -229,3 +229,21 @@ function! s:DechoCmd(cmd)
 endfunction
 command! -nargs=+ -complete=command DC call s:DechoCmd(<q-args>)
 " }}"
+
+
+" Sort words selected in visual mode in a single line, separated by space {{
+function! s:SortWords() range
+    if a:firstline != a:lastline
+        echomsg "Can only sort words in a single line."
+    endif
+    " yank current visual selection to reg x
+    normal gv"xy
+    " split the words selected and sort
+    let @x = join(sort(split(@x, ' ')), ' ')
+    " re-select area and delete
+    normal gvd
+    " paste sorted words back in
+    normal "xP
+endfunction
+vnoremap <leader>sw :call <SID>SortWords()<CR>
+" }}
