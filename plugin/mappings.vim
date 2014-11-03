@@ -128,6 +128,9 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
+vnoremap <leader>sw :call myutils#SortWords(' ', 0)<CR>
+vnoremap <leader>sn :call myutils#SortWords(' ', 1)<CR>
+
 " Unused, use vim-airline for fast buffer switching instead
 " Switch tabs by press alt + tabid
 " NORMAL mode bindings for vim(terminal mode)
