@@ -11,7 +11,8 @@ augroup FiletypeFormat
     autocmd BufRead BUILD setlocal nospell
     autocmd BufRead *.log setlocal nospell
     autocmd FileType conf setlocal nospell
-    autocmd FileType vimshell setlocal nospell | set nonumber
+    " Use numbers.vim for more intelligent number toggle
+    " autocmd FileType vimshell setlocal nospell | set nonumber
     autocmd BufRead *.vim
         \ setlocal sw=4 | setlocal ts=4 | setlocal softtabstop=4
     autocmd BufEnter * hi Todo term=standout ctermfg=11 ctermbg=none guifg=Blue guibg=Black

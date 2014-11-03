@@ -1,6 +1,6 @@
 " Allow using command :E to edit multiple files {{
 " Only files (not directories) matched by the glob pattern will be edited
-function! Edit(really, ...)
+function! s:Edit(really, ...)
     if len(a:000)
         for globspec in a:000
             let l:files = split(glob(globspec), "\n")
@@ -14,12 +14,12 @@ function! Edit(really, ...)
         exec 'e'.(a:really)
     endif
 endfunction
-command! -nargs=* -complete=file -bang E call Edit("<bang>", <f-args>)
+command! -nargs=* -complete=file -bang E call <SID>Edit("<bang>", <f-args>)
 " }}
 
 
 " Highlight columns that is larger than textwidth {{
-function! HighlightTooLongLines()
+function! s:HighlightTooLongLines()
     if !exists('g:htll') || g:htll == 0
         let g:htll = 1
         highlight def link RightMargin Error
@@ -34,7 +34,7 @@ function! HighlightTooLongLines()
         endif
     endif
 endfunction
-noremap <leader>hl :call HighlightTooLongLines()<CR>
+noremap <leader>hl :call <SID>HighlightTooLongLines()<CR>
 " }}
 
 
@@ -52,7 +52,12 @@ nnoremap <leader>tc :call <SID>ToggleColorColumn()<CR>
 
 " Confirm saving buffers before it is closed. {{
 " Quit vim if the closed buffer is the last buffer
-function! <SID>BufcloseCloseIt(confirm)
+function! s:BufcloseCloseIt(confirm)
+    if myutils#IsInNERDTreeWindow()
+        NERDTreeToggle
+        return
+    endif
+
     let l:currentBufNum = bufnr("%")
     let l:totalBufNum = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
 
@@ -63,8 +68,12 @@ function! <SID>BufcloseCloseIt(confirm)
     endif
 
     if l:totalBufNum == 1
-        execute("q!")
+        execute("qa!")
     else
+        let l:next_bufnr = myutils#NextBufNr(l:currentBufNum)
+        if (l:next_bufnr != l:currentBufNum)
+            execute("b! " . l:next_bufnr)
+        endif
         execute("bdelete! ".l:currentBufNum)
         " execute("bwipeout! ".l:currentBufNum)
     endif
@@ -103,12 +112,12 @@ vmap <leader>y :call <SID>CopyText()<CR>
 
 
 " Map key to toggle options {{
-function MapToggle(key, opt)
+function s:MapToggle(key, opt)
     let l:cmd = ':set ' . a:opt . '! \| set ' . a:opt . "?\<CR>"
     exec 'nnoremap ' . a:key . ' ' . l:cmd
     exec 'inoremap ' . a:key . " \<C-O>" . l:cmd
 endfunction
-command -nargs=+ MapToggle call MapToggle(<f-args>)
+command -nargs=+ MapToggle call <SID>MapToggle(<f-args>)
 
 " Display-altering option toggles
 MapToggle <F1> spell
@@ -229,21 +238,3 @@ function! s:DechoCmd(cmd)
 endfunction
 command! -nargs=+ -complete=command DC call s:DechoCmd(<q-args>)
 " }}"
-
-
-" Sort words selected in visual mode in a single line, separated by space {{
-function! s:SortWords() range
-    if a:firstline != a:lastline
-        echomsg "Can only sort words in a single line."
-    endif
-    " yank current visual selection to reg x
-    normal gv"xy
-    " split the words selected and sort
-    let @x = join(sort(split(@x, ' ')), ' ')
-    " re-select area and delete
-    normal gvd
-    " paste sorted words back in
-    normal "xP
-endfunction
-vnoremap <leader>sw :call <SID>SortWords()<CR>
-" }}
