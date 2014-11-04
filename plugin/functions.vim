@@ -58,19 +58,19 @@ function! s:BufcloseCloseIt(confirm)
         return
     endif
 
-    let l:currentBufNum = bufnr("%")
-    let l:totalBufNum = myutils#GetNumBuffers()
-
     if &mod && a:confirm
         if input("Save changes?(y/n) ") == "y"
             execute("w!")
         endif
     endif
 
+    let l:currentBufNum = bufnr("%")
     let l:next_bufnr = myutils#NextBufNr(l:currentBufNum)
     if l:next_bufnr == -1
+        " Current buffer is a special buffer (help, NERDTree, etc)
         execute("bdelete! ".l:currentBufNum)
-    elseif l:totalBufNum == 1
+    elseif l:next_bufnr == l:currentBufNum
+        " Current buffer is the only listed buffer
         execute("qa!")
     else
         execute("b! " . l:next_bufnr)
