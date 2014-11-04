@@ -1,7 +1,14 @@
+" Get the array of normal buffers, by normal it means it is not special
+" buffers that are for exampe hidden {{
+function! myutils#GetListedBuffers()
+    return filter(range(1, bufnr('$')), 'buflisted(v:val)')
+endfunction
+" }}
+
 " Get the number of normal buffers, by normal it means it is not special
 " buffers that are for exampe hidden {{
 function! myutils#GetNumBuffers()
-    return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
+    return len(myutils#GetListedBuffers())
 endfunction
 " }}
 
@@ -11,9 +18,13 @@ endfunction
 " smaller than 'cur_bufnr'. Returns 'cur_bufnr' if there is only one normal
 " buffer. {{
 function! myutils#NextBufNr(cur_bufnr)
-    let l:buffers = filter(range(1, bufnr('$')), 'buflisted(v:val)')
+    let l:buffers = myutils#GetListedBuffers()
     if len(l:buffers) == 1
-        return a:cur_bufnr
+        if l:buffers[0] == a:cur_bufnr
+            return l:buffers[0]
+        else
+            return -1
+        endif
     endif
 
     for i in range(0, len(l:buffers) - 1)
@@ -25,7 +36,7 @@ function! myutils#NextBufNr(cur_bufnr)
             endif
         endif
     endfor
-    return a:cur_bufnr
+    return -1
 endfunction
 " }}
 

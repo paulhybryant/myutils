@@ -59,7 +59,7 @@ function! s:BufcloseCloseIt(confirm)
     endif
 
     let l:currentBufNum = bufnr("%")
-    let l:totalBufNum = len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
+    let l:totalBufNum = myutils#GetNumBuffers()
 
     if &mod && a:confirm
         if input("Save changes?(y/n) ") == "y"
@@ -67,13 +67,13 @@ function! s:BufcloseCloseIt(confirm)
         endif
     endif
 
-    if l:totalBufNum == 1
+    let l:next_bufnr = myutils#NextBufNr(l:currentBufNum)
+    if l:next_bufnr == -1
+        execute("bdelete! ".l:currentBufNum)
+    elseif l:totalBufNum == 1
         execute("qa!")
     else
-        let l:next_bufnr = myutils#NextBufNr(l:currentBufNum)
-        if (l:next_bufnr != l:currentBufNum)
-            execute("b! " . l:next_bufnr)
-        endif
+        execute("b! " . l:next_bufnr)
         execute("bdelete! ".l:currentBufNum)
         " execute("bwipeout! ".l:currentBufNum)
     endif
