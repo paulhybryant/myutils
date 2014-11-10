@@ -15,7 +15,7 @@ augroup FiletypeFormat
     " autocmd FileType vimshell setlocal nospell | set nonumber
     autocmd BufRead *.vim
         \ setlocal sw=4 | setlocal ts=4 | setlocal softtabstop=4
-    autocmd BufEnter * hi Todo term=standout ctermfg=11 ctermbg=none guifg=Blue guibg=Black
+    " autocmd BufEnter * hi Todo term=standout ctermfg=11 ctermbg=none guifg=Blue guibg=Black
 
     " Enable omni completion.
     " autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
