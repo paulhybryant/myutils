@@ -17,8 +17,16 @@ endfunction
 " is the largest buffer number, return the largest buffer number that is
 " smaller than 'cur_bufnr'. Returns 'cur_bufnr' if there is only one normal
 " buffer. {{
+let g:myutils#special_bufvars = ['gistls', 'NERDTreeType']
 function! myutils#NextBufNr(cur_bufnr)
     let l:buffers = myutils#GetListedBuffers()
+
+    for var in g:myutils#special_bufvars
+        if exists('b:' . var)
+            return -1
+        endif
+    endfor
+
     if len(l:buffers) == 1
         if l:buffers[0] == a:cur_bufnr
             return l:buffers[0]
