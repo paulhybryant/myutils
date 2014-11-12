@@ -238,3 +238,26 @@ function! s:DechoCmd(cmd)
 endfunction
 command! -nargs=+ -complete=command DC call s:DechoCmd(<q-args>)
 " }}"
+
+" Enable jumping using location list when only one error exists {{
+function! s:LocationPrevious()
+  try
+    lprev
+  catch /^Vim\%((\a\+)\)\=:E553/
+    llast
+  endtry
+endfunction
+
+function! s:LocationNext()
+  try
+    lnext
+  catch /^Vim\%((\a\+)\)\=:E553/
+    lfirst
+  endtry
+endfunction
+
+nnoremap <silent> <Plug>LocationPrevious :<C-u>exe 'call <SID>LocationPrevious()'<CR>
+nnoremap <silent> <Plug>LocationNext :<C-u>exe 'call <SID>LocationNext()'<CR>
+nmap <silent> <leader>lp <Plug>LocationPrevious
+nmap <silent> <leader>ln <Plug>LocationNext
+" }}

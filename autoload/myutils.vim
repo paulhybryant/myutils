@@ -21,6 +21,10 @@ let g:myutils#special_bufvars = ['gistls', 'NERDTreeType']
 function! myutils#NextBufNr(cur_bufnr)
     let l:buffers = myutils#GetListedBuffers()
 
+    if &buftype == 'quickfix'
+        return -1
+    endif
+
     for var in g:myutils#special_bufvars
         if exists('b:' . var)
             return -1
