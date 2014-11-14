@@ -36,7 +36,7 @@ endif
 
 " Paste from the yank register, which only gets overwriten by yanking but
 " not deleting.
-nnoremap <leader>p "0p
+noremap <leader>p "0p
 
 " Switch CWD to the directory of the open buffer
 noremap <leader>cd :lcd %:p:h<cr>:pwd<CR>

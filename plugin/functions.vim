@@ -73,8 +73,12 @@ function! s:BufcloseCloseIt(confirm)
         " Current buffer is the only listed buffer
         execute("qa!")
     else
-        execute("b! " . l:next_bufnr)
-        execute("bdelete! ".l:currentBufNum)
+        if myutils#GetNumberOfNormalWindows() == 1
+            execute("b! " . l:next_bufnr)
+            execute("bdelete! ".l:currentBufNum)
+        else
+            execute "wincmd q"
+        endif
         " execute("bwipeout! ".l:currentBufNum)
     endif
 endfunction
@@ -112,12 +116,12 @@ vmap <leader>y :call <SID>CopyText()<CR>
 
 
 " Map key to toggle options {{
-function s:MapToggle(key, opt)
+function! s:MapToggle(key, opt)
     let l:cmd = ':set ' . a:opt . '! \| set ' . a:opt . "?\<CR>"
     exec 'nnoremap ' . a:key . ' ' . l:cmd
     exec 'inoremap ' . a:key . " \<C-O>" . l:cmd
 endfunction
-command -nargs=+ MapToggle call <SID>MapToggle(<f-args>)
+command! -nargs=+ MapToggle call <SID>MapToggle(<f-args>)
 
 " Display-altering option toggles
 MapToggle <F1> spell

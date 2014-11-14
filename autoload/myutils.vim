@@ -99,3 +99,9 @@ function! myutils#SortWords(delimiter, numeric) range
     normal "xP
 endfunction
 " }}
+
+" Get the total number of normal windows {{
+function! myutils#GetNumberOfNormalWindows()
+    return len(filter(range(1, winnr('$')), 'buflisted(winbufnr(v:val))'))
+endfunction
+" }}
