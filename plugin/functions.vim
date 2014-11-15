@@ -209,6 +209,8 @@ if g:statusline_use_airline && exists('g:airline#extensions#tabline#buffer_idx_m
             call <SID>SetupTablineMappingForMac()
         elseif LINUX()
             call <SID>SetupTablineMappingForLinux()
+        elseif WINDOWS()
+            call <SID>SetupTablineMappingForWindows()
         endif
     endif
 endif
