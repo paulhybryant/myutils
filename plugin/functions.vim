@@ -184,6 +184,19 @@ function! <SID>SetupTablineMappingForLinux()
 endfunction
 nnoremap <leader>kl :call <SID>SetupTablineMappingForLinux()<CR>
 
+function! <SID>SetupTablineMappingForWindows()
+    silent! nmap <silent> <unique> ± <Plug>AirlineSelectTab1
+    silent! nmap <silent> <unique> ² <Plug>AirlineSelectTab2
+    silent! nmap <silent> <unique> ³ <Plug>AirlineSelectTab3
+    silent! nmap <silent> <unique> ´ <Plug>AirlineSelectTab4
+    silent! nmap <silent> <unique> µ <Plug>AirlineSelectTab5
+    silent! nmap <silent> <unique> ¶ <Plug>AirlineSelectTab6
+    silent! nmap <silent> <unique> · <Plug>AirlineSelectTab7
+    silent! nmap <silent> <unique> ¸ <Plug>AirlineSelectTab8
+    silent! nmap <silent> <unique> ¹ <Plug>AirlineSelectTab9
+endfunction
+nnoremap <leader>kw :call <SID>SetupTablineMappingForWindows()<CR>
+
 if g:statusline_use_airline && exists('g:airline#extensions#tabline#buffer_idx_mode')
     if len($SSH_CLIENT) > 0
         if $SSH_OS == "Darwin"
