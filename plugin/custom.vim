@@ -18,11 +18,12 @@ augroup FiletypeFormat
     " autocmd BufEnter * hi Todo term=standout ctermfg=11 ctermbg=none guifg=Blue guibg=Black
 
     " Enable omni completion.
-    " autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
     autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
     " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    " autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
     autocmd FileType xml,xhtml so ~/.vim/bundle/HTML-AutoCloseTag/ftplugin/html_autoclosetag.vim
     " autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
     " autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+    autocmd FileType autohotkey setlocal omnifunc=syntaxcomplete#Complete
 augroup END
