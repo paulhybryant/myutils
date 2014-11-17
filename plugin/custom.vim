@@ -25,5 +25,5 @@ augroup FiletypeFormat
     autocmd FileType xml,xhtml so ~/.vim/bundle/HTML-AutoCloseTag/ftplugin/html_autoclosetag.vim
     " autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
     " autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
-    autocmd FileType autohotkey setlocal omnifunc=syntaxcomplete#Complete
+    autocmd FileType autohotkey setlocal omnifunc=syntaxcomplete#Complete | colorscheme scite
 augroup END
