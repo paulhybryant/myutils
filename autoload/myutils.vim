@@ -5,9 +5,9 @@ function! myutils#GetListedBuffers()
 endfunction
 " }}
 
-" Get the number of normal buffers, by normal it means it is not special
+" Get the number of normal listed buffers, by normal it means it is not special
 " buffers that are for exampe hidden {{
-function! myutils#GetNumBuffers()
+function! myutils#GetNumListedBuffers()
     return len(myutils#GetListedBuffers())
 endfunction
 " }}
