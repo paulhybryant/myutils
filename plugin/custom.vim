@@ -18,6 +18,11 @@ augroup FiletypeFormat
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   autocmd FileType xml,xhtml so ~/.vim/bundle/HTML-AutoCloseTag/ftplugin/html_autoclosetag.vim
   autocmd FileType autohotkey setlocal omnifunc=syntaxcomplete#Complete
+  if &background == "light"
+    autocmd FileType vtd hi! Ignore guifg=#FDF6E3
+  else
+    autocmd FileType vtd hi! Ignore guifg=#002B36
+  endif
   " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
   " autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
   " autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
