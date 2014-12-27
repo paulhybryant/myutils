@@ -131,7 +131,9 @@ map <F9> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<
 vnoremap <leader>sw :call myutils#SortWords(' ', 0)<CR>
 vnoremap <leader>sn :call myutils#SortWords(' ', 1)<CR>
 
-" nnoremap <leader>ln
+map <leader>gh :call myutils#EditHeader()<CR>
+map <leader>gc :call myutils#EditCC()<CR>
+map <leader>gt :call myutils#EditTest()<CR>
 
 " Unused, use vim-airline for fast buffer switching instead
 " Switch tabs by press alt + tabid
