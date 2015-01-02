@@ -1,22 +1,24 @@
+" vim: set sw=2 ts=2 sts=2 et tw=78 foldlevel=0 foldmethod=marker filetype=vim nospell:
+
 " Get the array of normal buffers, by normal it means it is not special
-" buffers that are for exampe hidden {{
+" buffers that are for exampe hidden {{{
 function! myutils#GetListedBuffers()
     return filter(range(1, bufnr('$')), 'buflisted(v:val)')
 endfunction
-" }}
+" }}}
 
 " Get the number of normal listed buffers, by normal it means it is not special
-" buffers that are for exampe hidden {{
+" buffers that are for exampe hidden {{{
 function! myutils#GetNumListedBuffers()
     return len(myutils#GetListedBuffers())
 endfunction
-" }}
+" }}}
 
 " Get the next number of normal buffers after 'cur_bufnr'. The next number is
 " the smallest buffer number that is larger than 'cur_bufnr'. If 'cur_bufnr'
 " is the largest buffer number, return the largest buffer number that is
 " smaller than 'cur_bufnr'. Returns 'cur_bufnr' if there is only one normal
-" buffer. {{
+" buffer. {{{
 let g:myutils#special_bufvars = ['gistls', 'NERDTreeType']
 function! myutils#NextBufNr(cur_bufnr)
     let l:buffers = myutils#GetListedBuffers()
@@ -50,22 +52,22 @@ function! myutils#NextBufNr(cur_bufnr)
     endfor
     return -1
 endfunction
-" }}
+" }}}
 
-" Whether the current window is the NERDTree window {{
+" Whether the current window is the NERDTree window {{{
 function! myutils#IsInNERDTreeWindow()
   return exists("b:NERDTreeType")
 endfunction
-" }}
+" }}}
 
-" Returns true iff is NERDTree open/active {{
+" Returns true iff is NERDTree open/active {{{
 function! myutils#IsNTOpen()
     return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
 endfunction
-" }}
+" }}}
 
 " calls NERDTreeFind iff NERDTree is active, current window contains a
-" modifiable file, and we're not in vimdiff {{
+" modifiable file, and we're not in vimdiff {{{
 function! myutils#SyncNTTree()
     if &modifiable && myutils#IsNTOpen() && strlen(expand('%')) > 0 && !&diff
         if !exists('t:NERDTreeBufName') || bufname('%') != t:NERDTreeBufName
@@ -74,9 +76,9 @@ function! myutils#SyncNTTree()
         endif
     endif
 endfunction
-" }}
+" }}}
 
-" Sort words selected in visual mode in a single line, separated by space {{
+" Sort words selected in visual mode in a single line, separated by space {{{
 function! myutils#SortWords(delimiter, numeric) range
     let l:delimiter = a:delimiter
     if a:firstline != a:lastline
@@ -98,10 +100,48 @@ function! myutils#SortWords(delimiter, numeric) range
     " paste sorted words back in
     normal "xP
 endfunction
-" }}
+" }}}
 
-" Get the total number of normal windows {{
+" Get the total number of normal windows {{{
 function! myutils#GetNumberOfNormalWindows()
     return len(filter(range(1, winnr('$')), 'buflisted(winbufnr(v:val))'))
 endfunction
-" }}
+" }}}
+
+" Functions for editing related files {{{
+function! myutils#EditHeader()
+  let l:filename = expand("%")
+  if l:filename =~# ".*\.h"
+    return
+  elseif l:filename =~# ".*_unittest\.cc"
+    let l:filename = substitute(l:filename, "\\v(.*)_unittest\.cc", "\\1", "")
+  elseif l:filename =~# ".*\.cc"
+    let l:filename = substitute(l:filename, "\\v(.*)\.cc", "\\1", "")
+  endif
+  exec "edit " . fnameescape(l:filename . ".h")
+endfunction
+
+function! myutils#EditCC()
+  let l:filename = expand("%")
+  if l:filename =~# ".*_unittest\.cc"
+    let l:filename = substitute(l:filename, "\\v(.*)_unittest\.cc", "\\1", "")
+  elseif l:filename =~# ".*\.h"
+    let l:filename = substitute(l:filename, "\\v(.*)\.h", "\\1", "")
+  else
+    return
+  endif
+  exec "edit " . fnameescape(l:filename . ".cc")
+endfunction
+
+function! myutils#EditTest()
+  let l:filename = expand("%")
+  if l:filename =~# ".*_unittest\.cc"
+    return
+  elseif l:filename =~# ".*\.cc"
+    let l:filename = substitute(l:filename, "\\v(.*)\.cc", "\\1", "")
+  elseif l:filename =~# ".*\.h"
+    let l:filename = substitute(l:filename, "\\v(.*)\.h", "\\1", "")
+  endif
+  exec "edit " . fnameescape(l:filename . "_unittest.cc")
+endfunction
+" }}}
