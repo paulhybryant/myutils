@@ -21,15 +21,15 @@ cnoremap <C-b> <C-v>
 inoremap <C-b> <C-v>
 
 " Use C-j, C-k, C-l, C-h to jump between windows
-nnoremap <C-j> <C-W>j
-nnoremap <C-h> <C-W>h
-nnoremap <C-l> <C-W>l
-nnoremap <C-k> <C-W>k
+" nnoremap <C-j> <C-W>j
+" nnoremap <C-h> <C-W>h
+" nnoremap <C-l> <C-W>l
+" nnoremap <C-k> <C-W>k
 
-inoremap <C-j> <ESC><C-W>j
-inoremap <C-h> <ESC><C-W>h
-inoremap <C-l> <ESC><C-W>l
-inoremap <C-k> <ESC><C-W>k
+" inoremap <C-j> <ESC><C-W>j
+" inoremap <C-h> <ESC><C-W>h
+" inoremap <C-l> <ESC><C-W>l
+" inoremap <C-k> <ESC><C-W>k
 
 " Ctrl-Tab only works in gvim
 if has('gui_running')
