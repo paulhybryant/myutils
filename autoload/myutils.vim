@@ -111,11 +111,11 @@ endfunction
 " Functions for editing related files {{{
 function! myutils#EditHeader()
   let l:filename = expand("%")
-  if l:filename =~# ".*\.h"
+  if l:filename =~# ".*\.h$"
     return
-  elseif l:filename =~# ".*_unittest\.cc"
+  elseif l:filename =~# ".*_unittest\.cc$"
     let l:filename = substitute(l:filename, "\\v(.*)_unittest\.cc", "\\1", "")
-  elseif l:filename =~# ".*\.cc"
+  elseif l:filename =~# ".*\.cc$"
     let l:filename = substitute(l:filename, "\\v(.*)\.cc", "\\1", "")
   endif
   exec "edit " . fnameescape(l:filename . ".h")
