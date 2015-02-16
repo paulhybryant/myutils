@@ -159,7 +159,7 @@ function! <SID>SetupTablineMappingForMac()
   silent! nmap <silent> <unique> • <Plug>AirlineSelectTab8
   silent! nmap <silent> <unique> ª <Plug>AirlineSelectTab9
 endfunction
-nnoremap <leader>km :call <SID>SetupTablineMappingForMac()<CR>
+noremap <unique> <Plug>SetupTablineMappingForMac :call <SID>SetupTablineMappingForMac()<CR>
 
 function! <SID>SetupTablineMappingForLinux()
   if has('gui_running')
@@ -184,7 +184,7 @@ function! <SID>SetupTablineMappingForLinux()
     silent! nmap <silent> <unique> 9 <Plug>AirlineSelectTab9
   endif
 endfunction
-nnoremap <leader>kl :call <SID>SetupTablineMappingForLinux()<CR>
+noremap <unique> <Plug>SetupTablineMappingForLinux :call <SID>SetupTablineMappingForLinux()<CR>
 
 function! <SID>SetupTablineMappingForWindows()
   silent! nmap <silent> <unique> ± <Plug>AirlineSelectTab1
@@ -197,25 +197,7 @@ function! <SID>SetupTablineMappingForWindows()
   silent! nmap <silent> <unique> ¸ <Plug>AirlineSelectTab8
   silent! nmap <silent> <unique> ¹ <Plug>AirlineSelectTab9
 endfunction
-nnoremap <leader>kw :call <SID>SetupTablineMappingForWindows()<CR>
-
-if g:statusline_use_airline && exists('g:airline#extensions#tabline#buffer_idx_mode')
-  if len($SSH_CLIENT) > 0
-    if $SSH_OS == "Darwin"
-      call <SID>SetupTablineMappingForMac()
-    elseif $SSH_OS == "Linux"
-      call <SID>SetupTablineMappingForLinux()
-    endif
-  else
-    if OSX()
-      call <SID>SetupTablineMappingForMac()
-    elseif LINUX()
-      call <SID>SetupTablineMappingForLinux()
-    elseif WINDOWS()
-      call <SID>SetupTablineMappingForWindows()
-    endif
-  endif
-endif
+noremap <unique> <Plug>SetupTablineMappingForWindows :call <SID>SetupTablineMappingForWindows()<CR>
 
 " }}}
 
