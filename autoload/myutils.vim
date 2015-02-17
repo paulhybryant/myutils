@@ -145,3 +145,53 @@ function! myutils#EditTest()
   exec "edit " . fnameescape(l:filename . "_unittest.cc")
 endfunction
 " }}}
+
+" functions for settping up tabline mappsing for different OSes {{{
+function! myutils#SetupTablineMappingForMac()
+  silent! nmap <silent> <unique> ¡ <Plug>AirlineSelectTab1
+  silent! nmap <silent> <unique> ™ <Plug>AirlineSelectTab2
+  silent! nmap <silent> <unique> £ <Plug>AirlineSelectTab3
+  silent! nmap <silent> <unique> ¢ <Plug>AirlineSelectTab4
+  silent! nmap <silent> <unique> ∞ <Plug>AirlineSelectTab5
+  silent! nmap <silent> <unique> § <Plug>AirlineSelectTab6
+  silent! nmap <silent> <unique> ¶ <Plug>AirlineSelectTab7
+  silent! nmap <silent> <unique> • <Plug>AirlineSelectTab8
+  silent! nmap <silent> <unique> ª <Plug>AirlineSelectTab9
+endfunction
+
+function! myutils#SetupTablineMappingForLinux()
+  if has('gui_running')
+    silent! nmap <silent> <unique> <M-1> <Plug>AirlineSelectTab1
+    silent! nmap <silent> <unique> <M-2> <Plug>AirlineSelectTab2
+    silent! nmap <silent> <unique> <M-3> <Plug>AirlineSelectTab3
+    silent! nmap <silent> <unique> <M-4> <Plug>AirlineSelectTab4
+    silent! nmap <silent> <unique> <M-5> <Plug>AirlineSelectTab5
+    silent! nmap <silent> <unique> <M-6> <Plug>AirlineSelectTab6
+    silent! nmap <silent> <unique> <M-7> <Plug>AirlineSelectTab7
+    silent! nmap <silent> <unique> <M-8> <Plug>AirlineSelectTab8
+    silent! nmap <silent> <unique> <M-9> <Plug>AirlineSelectTab9
+  else
+    silent! nmap <silent> <unique> 1 <Plug>AirlineSelectTab1
+    silent! nmap <silent> <unique> 2 <Plug>AirlineSelectTab2
+    silent! nmap <silent> <unique> 3 <Plug>AirlineSelectTab3
+    silent! nmap <silent> <unique> 4 <Plug>AirlineSelectTab4
+    silent! nmap <silent> <unique> 5 <Plug>AirlineSelectTab5
+    silent! nmap <silent> <unique> 6 <Plug>AirlineSelectTab6
+    silent! nmap <silent> <unique> 7 <Plug>AirlineSelectTab7
+    silent! nmap <silent> <unique> 8 <Plug>AirlineSelectTab8
+    silent! nmap <silent> <unique> 9 <Plug>AirlineSelectTab9
+  endif
+endfunction
+
+function! myutils#SetupTablineMappingForWindows()
+  silent! nmap <silent> <unique> ± <Plug>AirlineSelectTab1
+  silent! nmap <silent> <unique> ² <Plug>AirlineSelectTab2
+  silent! nmap <silent> <unique> ³ <Plug>AirlineSelectTab3
+  silent! nmap <silent> <unique> ´ <Plug>AirlineSelectTab4
+  silent! nmap <silent> <unique> µ <Plug>AirlineSelectTab5
+  silent! nmap <silent> <unique> ¶ <Plug>AirlineSelectTab6
+  silent! nmap <silent> <unique> · <Plug>AirlineSelectTab7
+  silent! nmap <silent> <unique> ¸ <Plug>AirlineSelectTab8
+  silent! nmap <silent> <unique> ¹ <Plug>AirlineSelectTab9
+endfunction
+" }}}

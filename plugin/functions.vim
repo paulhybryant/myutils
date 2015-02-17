@@ -1,5 +1,4 @@
 " vim: set sw=2 ts=2 sts=2 et tw=78 foldlevel=0 foldmethod=marker filetype=vim nospell:
-
 " Allow using command :E to edit multiple files {{{
 " Only files (not directories) matched by the glob pattern will be edited
 function! s:Edit(really, ...)
@@ -18,7 +17,6 @@ function! s:Edit(really, ...)
 endfunction
 command! -nargs=* -complete=file -bang E call <SID>Edit("<bang>", <f-args>)
 " }}}
-
 
 " Highlight columns that is larger than textwidth {{{
 function! s:HighlightTooLongLines()
@@ -39,7 +37,6 @@ endfunction
 noremap <leader>hl :call <SID>HighlightTooLongLines()<CR>
 " }}}
 
-
 " Highlight columns from 81 - 120 to red {{{
 function! <SID>ToggleColorColumn()
   if &colorcolumn
@@ -50,7 +47,6 @@ function! <SID>ToggleColorColumn()
 endfunction
 nnoremap <leader>tc :call <SID>ToggleColorColumn()<CR>
 " }}}
-
 
 " Confirm saving buffers before it is closed. {{{
 " Quit vim if the closed buffer is the last buffer
@@ -91,7 +87,6 @@ nnoremap <C-q> :Bclose<cr>
 inoremap <C-q> <ESC>:Bclose<cr>
 " }}}
 
-
 " Call SQLUFormatter to format the sql statment, {{{
 " and move the comma at the start of new line to end of previous line.
 function! <SID>FormatSql()
@@ -102,7 +97,6 @@ endfunction
 " Format SQL statements in the current buffer
 command! Fsql call <SID>FormatSql()
 " }}}
-
 
 " Copy selected text to system clipboard {{{
 " and prevent it from clearing clipboard when using ctrl+z (depends on xsel)
@@ -116,7 +110,6 @@ endfunction
 vmap <leader>y :call <SID>CopyText()<CR>
 " }}}
 
-
 " Map key to toggle options {{{
 function! s:MapToggle(key, opt)
   let l:cmd = ':set ' . a:opt . '! \| set ' . a:opt . "?\<CR>"
@@ -128,7 +121,6 @@ command! -nargs=+ MapToggle call <SID>MapToggle(<f-args>)
 " Display-altering option toggles
 MapToggle <F1> spell
 " }}}
-
 
 " Insert repeated strings according to a pattern / template {{{
 function! <SID>InsertRepeated(tmpl, lower, upper)
@@ -146,63 +138,8 @@ command! -nargs=+ InsertRepeated call <SID>InsertRepeated(<f-args>)
 " command! -nargs=+ InsertRepeated2 call <SID>InsertRepeated2(<f-args>)
 " }}}
 
-
-" functions for settping up tabline mappsing for different OSes {{{
-function! <SID>SetupTablineMappingForMac()
-  silent! nmap <silent> <unique> ¡ <Plug>AirlineSelectTab1
-  silent! nmap <silent> <unique> ™ <Plug>AirlineSelectTab2
-  silent! nmap <silent> <unique> £ <Plug>AirlineSelectTab3
-  silent! nmap <silent> <unique> ¢ <Plug>AirlineSelectTab4
-  silent! nmap <silent> <unique> ∞ <Plug>AirlineSelectTab5
-  silent! nmap <silent> <unique> § <Plug>AirlineSelectTab6
-  silent! nmap <silent> <unique> ¶ <Plug>AirlineSelectTab7
-  silent! nmap <silent> <unique> • <Plug>AirlineSelectTab8
-  silent! nmap <silent> <unique> ª <Plug>AirlineSelectTab9
-endfunction
-noremap <unique> <Plug>SetupTablineMappingForMac :call <SID>SetupTablineMappingForMac()<CR>
-
-function! <SID>SetupTablineMappingForLinux()
-  if has('gui_running')
-    silent! nmap <silent> <unique> <M-1> <Plug>AirlineSelectTab1
-    silent! nmap <silent> <unique> <M-2> <Plug>AirlineSelectTab2
-    silent! nmap <silent> <unique> <M-3> <Plug>AirlineSelectTab3
-    silent! nmap <silent> <unique> <M-4> <Plug>AirlineSelectTab4
-    silent! nmap <silent> <unique> <M-5> <Plug>AirlineSelectTab5
-    silent! nmap <silent> <unique> <M-6> <Plug>AirlineSelectTab6
-    silent! nmap <silent> <unique> <M-7> <Plug>AirlineSelectTab7
-    silent! nmap <silent> <unique> <M-8> <Plug>AirlineSelectTab8
-    silent! nmap <silent> <unique> <M-9> <Plug>AirlineSelectTab9
-  else
-    silent! nmap <silent> <unique> 1 <Plug>AirlineSelectTab1
-    silent! nmap <silent> <unique> 2 <Plug>AirlineSelectTab2
-    silent! nmap <silent> <unique> 3 <Plug>AirlineSelectTab3
-    silent! nmap <silent> <unique> 4 <Plug>AirlineSelectTab4
-    silent! nmap <silent> <unique> 5 <Plug>AirlineSelectTab5
-    silent! nmap <silent> <unique> 6 <Plug>AirlineSelectTab6
-    silent! nmap <silent> <unique> 7 <Plug>AirlineSelectTab7
-    silent! nmap <silent> <unique> 8 <Plug>AirlineSelectTab8
-    silent! nmap <silent> <unique> 9 <Plug>AirlineSelectTab9
-  endif
-endfunction
-noremap <unique> <Plug>SetupTablineMappingForLinux :call <SID>SetupTablineMappingForLinux()<CR>
-
-function! <SID>SetupTablineMappingForWindows()
-  silent! nmap <silent> <unique> ± <Plug>AirlineSelectTab1
-  silent! nmap <silent> <unique> ² <Plug>AirlineSelectTab2
-  silent! nmap <silent> <unique> ³ <Plug>AirlineSelectTab3
-  silent! nmap <silent> <unique> ´ <Plug>AirlineSelectTab4
-  silent! nmap <silent> <unique> µ <Plug>AirlineSelectTab5
-  silent! nmap <silent> <unique> ¶ <Plug>AirlineSelectTab6
-  silent! nmap <silent> <unique> · <Plug>AirlineSelectTab7
-  silent! nmap <silent> <unique> ¸ <Plug>AirlineSelectTab8
-  silent! nmap <silent> <unique> ¹ <Plug>AirlineSelectTab9
-endfunction
-noremap <unique> <Plug>SetupTablineMappingForWindows :call <SID>SetupTablineMappingForWindows()<CR>
-
-" }}}
-
-" Deprecated by vim-syncopate
 " Define command HtmlExport for copying code with syntax highlight {{{
+" Deprecated by vim-syncopate
 " function! s:HtmlExport(keep_colorscheme) range
   " let l:has_number = &number
   " if (!a:keep_colorscheme)
@@ -230,7 +167,6 @@ noremap <unique> <Plug>SetupTablineMappingForWindows :call <SID>SetupTablineMapp
 " command! -bang -nargs=0 -range=% HtmlExport
   " \ <line1>,<line2>call s:HtmlExport('<bang>' ==# '!')
 " }}}
-
 
 " Wrapper for Decho to echo debug information from a command execution {{{
 function! s:DechoCmd(cmd)
