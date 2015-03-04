@@ -15,7 +15,7 @@ function! s:Edit(really, ...)
     exec 'e'.(a:really)
   endif
 endfunction
-command! -nargs=* -complete=file -bang E call <SID>Edit("<bang>", <f-args>)
+command! -nargs=* -complete=file -bang E call s:Edit("<bang>", <f-args>)
 " }}}
 
 " Highlight columns that is larger than textwidth {{{
@@ -34,18 +34,18 @@ function! s:HighlightTooLongLines()
     endif
   endif
 endfunction
-noremap <leader>hl :call <SID>HighlightTooLongLines()<CR>
+noremap <leader>hl :call s:HighlightTooLongLines()<CR>
 " }}}
 
 " Highlight columns from 81 - 120 to red {{{
-function! <SID>ToggleColorColumn()
+function! s:ToggleColorColumn()
   if &colorcolumn
     let &colorcolumn = ""
   else
     let &colorcolumn = join(range(81,120), ',')
   endif
 endfunction
-nnoremap <leader>tc :call <SID>ToggleColorColumn()<CR>
+nnoremap <leader>tc :call s:ToggleColorColumn()<CR>
 " }}}
 
 " Confirm saving buffers before it is closed. {{{
@@ -82,32 +82,32 @@ function! s:BufcloseCloseIt(confirm)
 endfunction
 
 " Close the current and window / tab
-command! Bclose call <SID>BufcloseCloseIt(1)
+command! Bclose call s:BufcloseCloseIt(1)
 nnoremap <C-q> :Bclose<cr>
 inoremap <C-q> <ESC>:Bclose<cr>
 " }}}
 
 " Call SQLUFormatter to format the sql statment, {{{
 " and move the comma at the start of new line to end of previous line.
-function! <SID>FormatSql()
+function! s:FormatSql()
   exec ':SQLUFormatter'
   exec ':%s/$\n\\(\\s*\\), /,\\r\\1'
 endfunction
 
 " Format SQL statements in the current buffer
-command! Fsql call <SID>FormatSql()
+command! Fsql call s:FormatSql()
 " }}}
 
 " Copy selected text to system clipboard {{{
 " and prevent it from clearing clipboard when using ctrl+z (depends on xsel)
-function! <SID>CopyText()
+function! s:CopyText()
   normal gv"+y
   " call system('xsel -ib', getreg('+'))
   call system('echo "' . getreg('+') . '" | xsel -i')
 endfunction
 
 " Copy test to xsel
-vmap <leader>y :call <SID>CopyText()<CR>
+vmap <leader>y :call s:CopyText()<CR>
 " }}}
 
 " Map key to toggle options {{{
@@ -116,26 +116,26 @@ function! s:MapToggle(key, opt)
   exec 'nnoremap ' . a:key . ' ' . l:cmd
   exec 'inoremap ' . a:key . " \<C-O>" . l:cmd
 endfunction
-command! -nargs=+ MapToggle call <SID>MapToggle(<f-args>)
+command! -nargs=+ MapToggle call s:MapToggle(<f-args>)
 
 " Display-altering option toggles
 MapToggle <F1> spell
 " }}}
 
 " Insert repeated strings according to a pattern / template {{{
-function! <SID>InsertRepeated(tmpl, lower, upper)
+function! s:InsertRepeated(tmpl, lower, upper)
   let l:strs = split(a:tmpl, "%i", 1)
   for i in range(a:lower, a:upper)
     let l:str = join(l:strs, "" . i)
     put = l:str
   endfor
 endfunction
-command! -nargs=+ InsertRepeated call <SID>InsertRepeated(<f-args>)
+command! -nargs=+ InsertRepeated call s:InsertRepeated(<f-args>)
 
-" function! <SID>InsertRepeated2(tmpl, lower, upper)
+" function! s:InsertRepeated2(tmpl, lower, upper)
   " put =map(range(a:lower, a:upper), 'printf(''%d'', v:val)')
 " endfunction
-" command! -nargs=+ InsertRepeated2 call <SID>InsertRepeated2(<f-args>)
+" command! -nargs=+ InsertRepeated2 call s:InsertRepeated2(<f-args>)
 " }}}
 
 " Define command HtmlExport for copying code with syntax highlight {{{
@@ -195,8 +195,34 @@ function! s:LocationNext()
   endtry
 endfunction
 
-nnoremap <silent> <Plug>LocationPrevious :<C-u>exe 'call <SID>LocationPrevious()'<CR>
-nnoremap <silent> <Plug>LocationNext :<C-u>exe 'call <SID>LocationNext()'<CR>
+nnoremap <silent> <Plug>LocationPrevious :<C-u>exe 'call s:LocationPrevious()'<CR>
+nnoremap <silent> <Plug>LocationNext :<C-u>exe 'call s:LocationNext()'<CR>
 nmap <silent> <leader>lp <Plug>LocationPrevious
 nmap <silent> <leader>ln <Plug>LocationNext
+" }}}
+
+" Remove trailing whitespaces and ^M chars {{{
+function! s:ToggleStripingTrailingWhitespace()
+  if !exists('g:keep_trailing_whitespace') || g:keep_trailing_whitespace == 0
+    let g:keep_trailing_whitespace = 1
+  else
+    let g:keep_trailing_whitespace = 0
+  endif
+endfunction
+nnoremap <leader>tws :call s:ToggleStripingTrailingWhitespace()<CR>
+
+" autocmd FileType * autocmd BufWritePre <buffer> call s:StripTrailingWhitespace()
+function! s:StripTrailingWhitespace()
+  if !exists('g:keep_trailing_whitespace') || g:keep_trailing_whitespace == 0
+    " Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " do the business:
+    %s/\s\+$//e
+    " clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+  endif
+endfunction
 " }}}
