@@ -607,8 +607,8 @@ function! myutils#CopyText() "  {{{
 endfunction
 " }}}
 
-" Insert repeated strings according to a pattern / template {{{
-function! myutils#InsertRepeated(tmpl, lower, upper)
+" Insert repeated strings according to a pattern / template
+function! myutils#InsertRepeated(tmpl, lower, upper) " {{{
   let l:strs = split(a:tmpl, "%i", 1)
   for i in range(a:lower, a:upper)
     let l:str = join(l:strs, "" . i)
@@ -619,4 +619,14 @@ endfunction
 " function! myutils#InsertRepeated(tmpl, lower, upper)
   " put =map(range(a:lower, a:upper), 'printf(''%d'', v:val)')
 " endfunction
+" }}}
+
+" Test whether a specific syntax group exists
+function! myutils#SyntaxGroupExists(group_name) " {{{
+  let l:syntaxes=""
+  redir => l:syntaxes
+  silent syntax
+  redir END
+  return stridx(l:syntaxes, a:group_name) > 0
+endfunction
 " }}}
