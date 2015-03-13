@@ -523,6 +523,23 @@ function! myutils#MapToggle(key, opt) "  {{{
 endfunction
 " }}}
 
+" Map key to toggle global variable. Value 1 will be assigned if original
+" value is 0.
+function! myutils#MapToggleVar(key, var) " {{{
+  execute 'nnoremap ' . a:key . ' :call myutils#ToggleVar(' . a:var . ')<CR>'
+endfunction
+
+function! myutils#ToggleVar(var)
+  execute "let l:varval=g:" . a:var
+  if l:varval > 0
+    let l:varval = 0
+  else
+    let l:varval = 1
+  endif
+  execute "let g:" . a:var . "=l:varval"
+endfunction
+" }}}
+
 " Call SQLUFormatter to format the sql statment, and move the comma at the
 " start of new line to end of previous line.
 function! myutils#FormatSql() "  {{{
@@ -628,5 +645,19 @@ function! myutils#SyntaxGroupExists(group_name) " {{{
   silent syntax
   redir END
   return stridx(l:syntaxes, a:group_name) > 0
+endfunction
+" }}}
+
+" Get the definition of a syntax group
+function! myutils#GetSynGroup(group_name) " {{{
+  let l:syngroup=""
+  redir => l:syngroup
+  execute "silent! syntax list " . a:group_name
+  redir END
+  let l:groups = split(l:syngroup, "\n")
+  if len(l:groups) != 2
+    return ""
+  endif
+  return maktaba#string#Strip(l:groups[1])
 endfunction
 " }}}
