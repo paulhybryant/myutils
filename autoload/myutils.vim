@@ -661,3 +661,21 @@ function! myutils#GetSynGroup(group_name) " {{{
   return maktaba#string#Strip(l:groups[1])
 endfunction
 " }}}
+
+" Yank the contents in register * to remote clipboard This function should be
+" used together with clipper https://github.com/wincent/clipper
+" Clipper should be started at the remote host to copy the contents to. It
+" creates a daemon listening at port 8377 at the remote host. For SSH remote
+" port forwarding is needed. 'ssh -R 8377:localhost:8377 host_ip'. Or config
+" 'RemoteForward 8377 localhost:8377' in '~/.ssh/config'. This is only tested in
+" Mac OSX. If the remote host is linux, consider using xclip and x forwarding.
+" Couldn't get x forwarding and xclip to work in Mac OSX, and ubuntu remote host
+" is not tried.
+function! myutils#YankToRemoteClipboard() " {{{
+  let l:reg = getreg("*")
+  " let l:reg = substitute(l:reg, "'", "\\\\'", "g")
+  " let l:reg = substitute(l:reg, "\x0a", "", "")
+  let l:cmd = printf("echo -n '%s' \| nc localhost 8377", l:reg)
+  call system(l:cmd)
+endfunction
+" }}}
