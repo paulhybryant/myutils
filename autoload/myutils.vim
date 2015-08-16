@@ -679,3 +679,16 @@ function! myutils#YankToRemoteClipboard() " {{{
   call system(l:cmd)
 endfunction
 " }}}
+
+" Find the window among all windows that with w:id equals to wid
+function! myutils#FindWindowWithId(wid) " {{{
+  for tabnr in range(1, tabpagenr('$'))
+    for winnr in range(1, tabpagewinnr(tabnr, '$'))
+      if gettabwinvar(tabnr, winnr, 'id') is a:wid
+        return [tabnr, winnr]
+      endif
+    endfor
+  endfor
+  return [0, 0]
+endfunction
+" }}}
