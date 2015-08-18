@@ -22,15 +22,15 @@ endfunction
 function! myutils#NextBufNr(cur_bufnr) " {{{
     let l:buffers = myutils#GetListedBuffers()
 
-    if &buftype == 'quickfix'
+    if &buftype == 'quickfix' || &buftype == 'indicator'
         return -1
     endif
 
-    for var in g:myutils#special_bufvars
-        if exists('b:' . var)
-            return -1
-        endif
-    endfor
+    " for var in g:myutils#special_bufvars
+        " if exists('b:' . var)
+            " return -1
+        " endif
+    " endfor
 
     if len(l:buffers) == 1
         if l:buffers[0] == a:cur_bufnr
