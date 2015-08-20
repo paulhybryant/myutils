@@ -7,12 +7,14 @@ function! myutils#GetListedBuffers()  " {{{
 endfunction
 " }}}
 
+
 " Get the number of normal listed buffers, by normal it means it is not
 " special buffers that are for exampe hidden
 function! myutils#GetNumListedBuffers() " {{{
     return len(myutils#GetListedBuffers())
 endfunction
 " }}}
+
 
 " Get the next number of normal buffers after 'cur_bufnr'. The next number is
 " the smallest buffer number that is larger than 'cur_bufnr'. If 'cur_bufnr'
@@ -53,17 +55,20 @@ function! myutils#NextBufNr(cur_bufnr) " {{{
 endfunction
 " }}}
 
+
 " Whether the current window is the NERDTree window
 function! myutils#IsInNERDTreeWindow() " {{{
   return exists("b:NERDTreeType")
 endfunction
 " }}}
 
+
 " Returns true iff is NERDTree open/active
 function! myutils#IsNTOpen() " {{{
     return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
 endfunction
 " }}}
+
 
 " Calls NERDTreeFind iff NERDTree is active, current window contains a
 " modifiable file, and we're not in vimdiff
@@ -76,6 +81,7 @@ function! myutils#SyncNTTree() " {{{
     endif
 endfunction
 " }}}
+
 
 " Sort words selected in visual mode in a single line, separated by space
 function! myutils#SortWords(delimiter, numeric) range " {{{
@@ -101,11 +107,13 @@ function! myutils#SortWords(delimiter, numeric) range " {{{
 endfunction
 " }}}
 
+
 " Get the total number of normal windows
 function! myutils#GetNumberOfNormalWindows() " {{{
     return len(filter(range(1, winnr('$')), 'buflisted(winbufnr(v:val))'))
 endfunction
 " }}}
+
 
 " Functions for editing related files
 function! myutils#EditHeader() " {{{
@@ -144,6 +152,7 @@ function! myutils#EditTest()
   exec "edit " . fnameescape(l:filename . "_unittest.cc")
 endfunction
 " }}}
+
 
 " Functions for settping up tabline mappsing for different OSes
 function! myutils#SetupTablineMappingForMac() " {{{
@@ -195,6 +204,7 @@ function! myutils#SetupTablineMappingForWindows()
 endfunction
 " }}}
 
+
 " Remove trailing whitespaces and ^M chars
 function! myutils#StripTrailingWhitespace() " {{{
   " Preparation: save last search, and cursor position.
@@ -208,6 +218,7 @@ function! myutils#StripTrailingWhitespace() " {{{
   call cursor(l, c)
 endfunction
 " }}}
+
 
 " Allow using command :E to edit multiple files
 " Only files (not directories) matched by the glob pattern will be edited
@@ -226,6 +237,7 @@ function! myutils#MultiEdit(really, ...) " {{{
   endif
 endfunction
 " }}}
+
 
 " Highlight hex strings with the color the hex string represents {{{
 let s:HexColored = 0
@@ -473,6 +485,7 @@ endfunction
 " }}}
 " }}}
 
+
 " Wrapper for Decho to echo debug information from a command execution
 function! myutils#DechoCmd(cmd) " {{{
   redir => l:msg
@@ -481,6 +494,7 @@ function! myutils#DechoCmd(cmd) " {{{
   silent execute "Decho '" . l:msg . "'"
 endfunction
 " }}}
+
 
 " Enable jumping using location list when only one error exists
 function! myutils#LocationPrevious() " {{{
@@ -500,6 +514,7 @@ function! myutils#LocationNext()
 endfunction
 " }}}
 
+
 " Insert charater char from current position until the cursor reaches column n
 function! myutils#FillWithCharTillN(char, n) " {{{
   let l:col = getpos('.')[2]
@@ -515,6 +530,7 @@ function! myutils#FillWithCharTillN(char, n) " {{{
 endfunction
 " }}}
 
+
 " Map key to toggle options
 function! myutils#MapToggle(key, opt) "  {{{
   let l:cmd = ':set ' . a:opt . '! \| set ' . a:opt . "?\<CR>"
@@ -522,6 +538,7 @@ function! myutils#MapToggle(key, opt) "  {{{
   exec 'inoremap ' . a:key . " \<C-O>" . l:cmd
 endfunction
 " }}}
+
 
 " Map key to toggle global variable. Value 1 will be assigned if original
 " value is 0.
@@ -540,6 +557,7 @@ function! myutils#ToggleVar(var)
 endfunction
 " }}}
 
+
 " Call SQLUFormatter to format the sql statment, and move the comma at the
 " start of new line to end of previous line.
 function! myutils#FormatSql() "  {{{
@@ -551,6 +569,7 @@ function! myutils#FormatSql() "  {{{
   exec ':%s/$\n\\(\\s*\\), /,\\r\\1'
 endfunction
 " }}}
+
 
 " Confirm saving buffers before it is closed and quit vim if the closed buffer
 " is the last buffer.
@@ -624,6 +643,7 @@ function! myutils#CopyText() "  {{{
 endfunction
 " }}}
 
+
 " Insert repeated strings according to a pattern / template
 function! myutils#InsertRepeated(tmpl, lower, upper) " {{{
   let l:strs = split(a:tmpl, "%i", 1)
@@ -638,6 +658,7 @@ endfunction
 " endfunction
 " }}}
 
+
 " Test whether a specific syntax group exists
 function! myutils#SyntaxGroupExists(group_name) " {{{
   let l:syntaxes=""
@@ -647,6 +668,7 @@ function! myutils#SyntaxGroupExists(group_name) " {{{
   return stridx(l:syntaxes, a:group_name) > 0
 endfunction
 " }}}
+
 
 " Get the definition of a syntax group
 function! myutils#GetSynGroup(group_name) " {{{
@@ -661,6 +683,7 @@ function! myutils#GetSynGroup(group_name) " {{{
   return maktaba#string#Strip(l:groups[1])
 endfunction
 " }}}
+
 
 " Yank the contents in register * to remote clipboard This function should be
 " used together with clipper https://github.com/wincent/clipper
@@ -680,6 +703,7 @@ function! myutils#YankToRemoteClipboard() " {{{
 endfunction
 " }}}
 
+
 " Find the window among all windows that with w:id equals to wid
 function! myutils#FindWindowWithId(wid) " {{{
   for tabnr in range(1, tabpagenr('$'))
@@ -691,4 +715,22 @@ function! myutils#FindWindowWithId(wid) " {{{
   endfor
   return [0, 0]
 endfunction
+" }}}
+
+
+" Converts a file with MS-DOS line ending to UNIX line ending
+function! Dos2unixFunction() "{{{
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  try
+      set ff=unix
+      w!
+      "%s/\%x0d$//e
+  catch /E32:/
+      echo "Sorry, the file is not saved."
+  endtry
+  let @/=_s
+  call cursor(l, c)
+endfun
 " }}}
