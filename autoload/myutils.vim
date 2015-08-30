@@ -24,15 +24,15 @@ endfunction
 function! myutils#NextBufNr(cur_bufnr) " {{{
     let l:buffers = myutils#GetListedBuffers()
 
-    if &buftype == 'quickfix' || &buftype == 'indicator'
+    if &buftype == 'quickfix'
         return -1
     endif
 
-    " for var in g:myutils#special_bufvars
-        " if exists('b:' . var)
-            " return -1
-        " endif
-    " endfor
+    for var in g:myutils#special_bufvars
+        if exists('b:' . var)
+            return -1
+        endif
+    endfor
 
     if len(l:buffers) == 1
         if l:buffers[0] == a:cur_bufnr
@@ -115,47 +115,35 @@ endfunction
 " }}}
 
 
-" Functions for editing related files
-function! myutils#EditHeader() " {{{
-  let l:filename = expand("%")
-  if l:filename =~# ".*\.h$"
-    return
-  elseif l:filename =~# ".*_unittest\.cc$"
-    let l:filename = substitute(l:filename, "\\v(.*)_unittest\.cc", "\\1", "")
-  elseif l:filename =~# ".*\.cc$"
-    let l:filename = substitute(l:filename, "\\v(.*)\.cc", "\\1", "")
-  endif
-  exec "edit " . fnameescape(l:filename . ".h")
-endfunction
-
-function! myutils#EditCC()
-  let l:filename = expand("%")
-  if l:filename =~# ".*_unittest\.cc"
-    let l:filename = substitute(l:filename, "\\v(.*)_unittest\.cc", "\\1", "")
-  elseif l:filename =~# ".*\.h"
-    let l:filename = substitute(l:filename, "\\v(.*)\.h", "\\1", "")
-  else
-    return
-  endif
-  exec "edit " . fnameescape(l:filename . ".cc")
-endfunction
-
-function! myutils#EditTest()
-  let l:filename = expand("%")
-  if l:filename =~# ".*_unittest\.cc"
-    return
-  elseif l:filename =~# ".*\.cc"
-    let l:filename = substitute(l:filename, "\\v(.*)\.cc", "\\1", "")
-  elseif l:filename =~# ".*\.h"
-    let l:filename = substitute(l:filename, "\\v(.*)\.h", "\\1", "")
-  endif
-  exec "edit " . fnameescape(l:filename . "_unittest.cc")
-endfunction
-" }}}
-
-
 " Functions for settping up tabline mappsing for different OSes
-function! myutils#SetupTablineMappingForMac() " {{{
+let s:tablinefns = {
+      \ 'mac' : 's:SetupTablineMappingForMac',
+      \ 'linux' : 's:SetupTablineMappingForLinux',
+      \ 'windows' : 's:SetupTablineMappingForWindows',
+      \ }
+function! myutils#SetupTablineMappings(OS) " {{{
+  let l:os = ''
+  if empty($SSH_CLIENT) || empty($SSH_OS)
+    if g:OS.is_mac
+      let l:os = 'mac'
+    elseif g:OS.is_linux
+      let l:os = 'linux'
+    elseif g:OS.is_windows
+      let l:os = 'windows'
+    endif
+  else
+    if $SSH_OS == 'Darwin'
+      let l:os = 'mac'
+    elseif $SSH_OS == 'Linux'
+      let l:os = 'linux'
+    endif
+  endif
+  if !empty(l:os)
+    call call(s:tablinefns[l:os], [])
+  endif
+endfunction
+
+function! s:SetupTablineMappingForMac()
   silent! nmap <silent> <unique> ¡ <Plug>AirlineSelectTab1
   silent! nmap <silent> <unique> ™ <Plug>AirlineSelectTab2
   silent! nmap <silent> <unique> £ <Plug>AirlineSelectTab3
@@ -167,7 +155,7 @@ function! myutils#SetupTablineMappingForMac() " {{{
   silent! nmap <silent> <unique> ª <Plug>AirlineSelectTab9
 endfunction
 
-function! myutils#SetupTablineMappingForLinux()
+function! s:SetupTablineMappingForLinux()
   if has('gui_running')
     silent! nmap <silent> <unique> <M-1> <Plug>AirlineSelectTab1
     silent! nmap <silent> <unique> <M-2> <Plug>AirlineSelectTab2
@@ -191,7 +179,7 @@ function! myutils#SetupTablineMappingForLinux()
   endif
 endfunction
 
-function! myutils#SetupTablineMappingForWindows()
+function! s:SetupTablineMappingForWindows()
   silent! nmap <silent> <unique> ± <Plug>AirlineSelectTab1
   silent! nmap <silent> <unique> ² <Plug>AirlineSelectTab2
   silent! nmap <silent> <unique> ³ <Plug>AirlineSelectTab3
@@ -733,4 +721,35 @@ function! Dos2unixFunction() "{{{
   let @/=_s
   call cursor(l, c)
 endfun
+" }}}
+
+
+" Initialization directories and settings for undo, swap and views.
+function! myutils#InitUndoSwapViews() " {{{
+  let l:prefix = expand('~/.vim/')
+  let l:dir_list = {
+        \ '.vimbackup' : 'backupdir',
+        \ '.vimviews' : 'viewdir',
+        \ '.vimswap' : 'directory',
+        \ '.vimundo' : 'undodir'
+        \ }
+  for [dirname, settingname] in items(l:dir_list)
+    let l:directory = l:prefix . dirname . '/'
+    if !isdirectory(l:directory)
+      if exists('*mkdir')
+        try
+          call mkdir(l:directory, 'p')
+        catch /E739:/
+          echo 'Error: Failed to create directory: ' . l:directory
+        endtry
+      else
+        echo 'Warning: mkdir not available. Unable to create directory:'
+              \ l:directory
+      endif
+    endif
+    " Escape spaces in the path
+    let l:directory = substitute(l:directory, ' ', '\\\\ ', 'g')
+    execute 'set' settingname . '=' . l:directory
+  endfor
+endfunction
 " }}}
