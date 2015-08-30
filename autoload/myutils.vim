@@ -116,34 +116,7 @@ endfunction
 
 
 " Functions for settping up tabline mappsing for different OSes
-let s:tablinefns = {
-      \ 'mac' : 's:SetupTablineMappingForMac',
-      \ 'linux' : 's:SetupTablineMappingForLinux',
-      \ 'windows' : 's:SetupTablineMappingForWindows',
-      \ }
-function! myutils#SetupTablineMappings(OS) " {{{
-  let l:os = ''
-  if empty($SSH_CLIENT) || empty($SSH_OS)
-    if g:OS.is_mac
-      let l:os = 'mac'
-    elseif g:OS.is_linux
-      let l:os = 'linux'
-    elseif g:OS.is_windows
-      let l:os = 'windows'
-    endif
-  else
-    if $SSH_OS == 'Darwin'
-      let l:os = 'mac'
-    elseif $SSH_OS == 'Linux'
-      let l:os = 'linux'
-    endif
-  endif
-  if !empty(l:os)
-    call call(s:tablinefns[l:os], [])
-  endif
-endfunction
-
-function! s:SetupTablineMappingForMac()
+function! s:SetupTablineMappingForMac() " {{{
   silent! nmap <silent> <unique> ¡ <Plug>AirlineSelectTab1
   silent! nmap <silent> <unique> ™ <Plug>AirlineSelectTab2
   silent! nmap <silent> <unique> £ <Plug>AirlineSelectTab3
@@ -189,6 +162,33 @@ function! s:SetupTablineMappingForWindows()
   silent! nmap <silent> <unique> · <Plug>AirlineSelectTab7
   silent! nmap <silent> <unique> ¸ <Plug>AirlineSelectTab8
   silent! nmap <silent> <unique> ¹ <Plug>AirlineSelectTab9
+endfunction
+
+let s:tablinefns = {
+      \ 'mac' : function('s:SetupTablineMappingForMac'),
+      \ 'linux' : function('s:SetupTablineMappingForLinux'),
+      \ 'windows' : function('s:SetupTablineMappingForWindows'),
+      \ }
+function! myutils#SetupTablineMappings(OS)
+  let l:os = ''
+  if empty($SSH_CLIENT) || empty($SSH_OS)
+    if g:OS.is_mac
+      let l:os = 'mac'
+    elseif g:OS.is_linux
+      let l:os = 'linux'
+    elseif g:OS.is_windows
+      let l:os = 'windows'
+    endif
+  else
+    if $SSH_OS == 'Darwin'
+      let l:os = 'mac'
+    elseif $SSH_OS == 'Linux'
+      let l:os = 'linux'
+    endif
+  endif
+  if !empty(l:os)
+    call call(s:tablinefns[l:os], [])
+  endif
 endfunction
 " }}}
 
