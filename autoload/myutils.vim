@@ -546,19 +546,6 @@ endfunction
 " }}}
 
 
-" Call SQLUFormatter to format the sql statment, and move the comma at the
-" start of new line to end of previous line.
-function! myutils#FormatSql() "  {{{
-  " Can also use !neobundle#is_sourced('SQLUtilities')
-  if !exists(":SQLUFormatter")
-    echoerr "Bundle SQLUtilities not loaded"
-  endif
-  exec ':SQLUFormatter'
-  exec ':%s/$\n\\(\\s*\\), /,\\r\\1'
-endfunction
-" }}}
-
-
 " Confirm saving buffers before it is closed and quit vim if the closed buffer
 " is the last buffer.
 function! myutils#BufcloseCloseIt(confirm) " {{{
