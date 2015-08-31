@@ -1,68 +1,5 @@
 " vim: set sw=2 ts=2 sts=2 et tw=78 foldlevel=0 foldmethod=marker filetype=vim nospell:
 
-" Get the array of normal buffers, by normal it means it is not special buffer
-" that is for exampe hidden
-function! myutils#GetListedBuffers()  " {{{
-    return filter(range(1, bufnr('$')), 'buflisted(v:val)')
-endfunction
-" }}}
-
-
-" Get the number of normal listed buffers, by normal it means it is not
-" special buffers that are for exampe hidden
-function! myutils#GetNumListedBuffers() " {{{
-    return len(myutils#GetListedBuffers())
-endfunction
-" }}}
-
-
-" Get the next number of normal buffers after 'cur_bufnr'. The next number is
-" the smallest buffer number that is larger than 'cur_bufnr'. If 'cur_bufnr'
-" is the largest buffer number, return the largest buffer number that is
-" smaller than 'cur_bufnr'. Returns 'cur_bufnr' if there is only one normal
-" buffer.
-function! myutils#NextBufNr(cur_bufnr) " {{{
-    let l:buffers = myutils#GetListedBuffers()
-
-    if &buftype == 'quickfix'
-        return -1
-    endif
-
-    for var in g:myutils#special_bufvars
-        if exists('b:' . var)
-            return -1
-        endif
-    endfor
-
-    if len(l:buffers) == 1
-        if l:buffers[0] == a:cur_bufnr
-            return l:buffers[0]
-        else
-            return -1
-        endif
-    endif
-
-    for i in range(0, len(l:buffers) - 1)
-        if l:buffers[i] == a:cur_bufnr
-            if i == len(l:buffers) - 1
-                return l:buffers[i - 1]
-            else
-                return l:buffers[i + 1]
-            endif
-        endif
-    endfor
-    return -1
-endfunction
-" }}}
-
-
-" Whether the current window is the NERDTree window
-function! myutils#IsInNERDTreeWindow() " {{{
-  return exists("b:NERDTreeType")
-endfunction
-" }}}
-
-
 " Returns true iff is NERDTree open/active
 function! myutils#IsNTOpen() " {{{
     return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
@@ -104,13 +41,6 @@ function! myutils#SortWords(delimiter, numeric) range " {{{
     normal gvd
     " paste sorted words back in
     normal "xP
-endfunction
-" }}}
-
-
-" Get the total number of normal windows
-function! myutils#GetNumberOfNormalWindows() " {{{
-    return len(filter(range(1, winnr('$')), 'buflisted(winbufnr(v:val))'))
 endfunction
 " }}}
 
@@ -546,40 +476,6 @@ endfunction
 " }}}
 
 
-" Confirm saving buffers before it is closed and quit vim if the closed buffer
-" is the last buffer.
-function! myutils#BufcloseCloseIt(confirm) " {{{
-  if myutils#IsInNERDTreeWindow()
-    NERDTreeToggle
-    return
-  endif
-
-  if &mod && a:confirm
-    if input("Save changes?(y/n) ") == "y"
-      execute("w!")
-    endif
-  endif
-
-  let l:currentBufNum = bufnr("%")
-  let l:next_bufnr = myutils#NextBufNr(l:currentBufNum)
-  if l:next_bufnr == -1
-    " Current buffer is a special buffer (help, NERDTree, etc)
-    execute("bdelete! ".l:currentBufNum)
-  elseif l:next_bufnr == l:currentBufNum
-    " Current buffer is the only listed buffer
-    execute("qa!")
-  else
-    if myutils#GetNumberOfNormalWindows() == 1
-      execute("b! " . l:next_bufnr)
-      execute("bdelete! ".l:currentBufNum)
-    else
-      execute "wincmd q"
-    endif
-    " execute("bwipeout! ".l:currentBufNum)
-  endif
-endfunction
-" }}}
-
 " Highlight columns that is larger than textwidth
 function! myutils#HighlightTooLongLines() "  {{{
   if !exists('g:htll') || g:htll == 0
@@ -598,6 +494,7 @@ function! myutils#HighlightTooLongLines() "  {{{
 endfunction
 " }}}
 
+
 " Highlight columns from 81 - 120 to red
 function! myutils#ToggleColorColumn() "  {{{
   if &colorcolumn
@@ -607,6 +504,7 @@ function! myutils#ToggleColorColumn() "  {{{
   endif
 endfunction
 " }}}
+
 
 " Copy selected text to system clipboard and prevent it from clearing
 " clipboard when using ctrl+z (depends on xsel)

@@ -12,7 +12,7 @@
 "  1. Save it somewhere.
 "  2. Edit ~/.vimrc to include...
 "       source ~/path/to/osc52.vim
-"       vmap <C-c> y:call SendViaOSC52(getreg('"'))<cr>
+"       vmap <C-c> y:call myutils#osc52#SendViaOSC52(getreg('"'))<cr>
 "
 " This will map Ctrl-C to copy.  You can now select text in vi using the visual
 " mark mode or the mouse, and press Ctrl-C to copy it to the clipboard.
@@ -23,7 +23,7 @@
 let g:max_osc52_sequence=100000
 
 " Send a string to the terminal's clipboard using the OSC 52 sequence.
-function! SendViaOSC52 (str)
+function! myutils#osc52#SendViaOSC52 (str)
   if match($TERM, 'screen') > -1
     let osc52 = s:get_OSC52_DCS(a:str)
   else
@@ -119,11 +119,8 @@ function! s:b64encode(str)
   endif
 
   return join(b64, '')
-
 endfunction
 
 function! s:str2bytes(str)
   return map(range(len(a:str)), 'char2nr(a:str[v:val])')
 endfunction
-
-vmap <C-c> y:call SendViaOSC52(getreg('"'))<CR>
