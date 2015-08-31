@@ -1,4 +1,4 @@
-vim-custom
+myutils
 ==========
 
-My vim customizations
+My vim utility functions.
