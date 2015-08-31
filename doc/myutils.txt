@@ -1,0 +1,28 @@
+*myutils.txt*	My vim utility functions
+Yu Huang                                                             *myutils*
+
+==============================================================================
+CONTENTS                                                    *myutils-contents*
+  1. Configuration............................................|myutils-config|
+
+==============================================================================
+CONFIGURATION                                                 *myutils-config*
+
+This plugin uses maktaba flags for configuration. Install Glaive
+(https://github.com/google/glaive) and use the |:Glaive| command to configure
+them.
+
+                                                 *myutils:bufclose_skip_types*
+Exit vim if all existing buffers is one of these types
+Default: [] `
+
+                                                    *myutils:plugin[commands]*
+Configures whether plugin/commands.vim should be loaded.
+Default: 1 `
+
+                                                    *myutils:plugin[mappings]*
+Configures whether plugin/mappings.vim should be loaded.
+Default: 0 `
+
+
+vim:tw=78:ts=8:ft=help:norl:
