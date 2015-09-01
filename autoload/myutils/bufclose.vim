@@ -49,7 +49,7 @@ function! s:NextBufNr(cur_bufnr) " {{{
     endif
 
     for var in s:plugin.Flag('bufclose_skip_types')
-        if exists('b:' . var)
+        if exists('b:' . var) || &filetype ==# var
             return -1
         endif
     endfor
