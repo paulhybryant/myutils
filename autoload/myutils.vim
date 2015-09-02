@@ -638,3 +638,15 @@ function! myutils#InitUndoSwapViews() " {{{
   endfor
 endfunction
 " }}}
+
+
+" Wrap the visually selected text in folds
+function! myutils#WrapInFold(fid) range abort " {{{
+  execute 'normal ' . a:firstline . 'GO'
+  call setline(a:firstline, '"  {{{' . a:fid)
+  execute 'normal ' . (a:lastline + 1) . 'Go'
+  call setline(a:lastline + 2, '" }}}')
+  call setpos('.', [bufnr('%'), a:firstline, 3, 0])
+  startinsert
+endfunction
+" }}}

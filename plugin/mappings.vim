@@ -98,6 +98,10 @@ nnoremap <F9> :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name')
 " Open all folds in the direct fold that contains current location
 nnoremap zO [zzczO<C-O>
 
+vnoremap <leader>wf1 :WIF 1<CR>
+vnoremap <leader>wf2 :WIF 2<CR>
+vnoremap <leader>wf3 :WIF 3<CR>
+
 " Unsed {{{
 " Adding newline and stay in normal mode.
 " <S-Enter> is not reflected, maybe captured by the tmux binding
