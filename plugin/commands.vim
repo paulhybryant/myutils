@@ -8,3 +8,14 @@ command! Dos2Unix keepjumps call myutils#Dos2unixFunction()
 
 " Close the buffer window with confirmation
 command! Bclose call myutils#bufclose#BufcloseCloseIt(1)
+
+" Create mappings to toggle global boolean (0/1) vars
+command! -nargs=+ MapToggleVar call myutils#MapToggleVar(<f-args>)
+
+command! -nargs=* -complete=file -bang E
+      \ call myutils#MultiEdit('<bang>', <f-args>)
+command! -nargs=+ -complete=command DC call myutils#DechoCmd(<q-args>)
+command! -nargs=+ InsertRepeated call myutils#InsertRepeated(<f-args>)
+
+" Deprecated in favor of vim-onoff
+" command! -nargs=+ MapToggle call myutils#MapToggle(<f-args>)

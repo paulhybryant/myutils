@@ -102,11 +102,11 @@ let s:tablinefns = {
 function! myutils#SetupTablineMappings(OS)
   let l:os = ''
   if empty($SSH_CLIENT) || empty($SSH_OS)
-    if g:OS.is_mac
+    if a:OS.is_mac
       let l:os = 'mac'
-    elseif g:OS.is_linux
+    elseif a:OS.is_linux
       let l:os = 'linux'
-    elseif g:OS.is_windows
+    elseif a:OS.is_windows
       let l:os = 'windows'
     endif
   else
@@ -450,6 +450,9 @@ endfunction
 
 
 " Map key to toggle options
+" Display-altering option toggles
+" nnoremap <leader>ts :let &spell = !&spell<CR>
+" MapToggle <F2> spell
 function! myutils#MapToggle(key, opt) "  {{{
   let l:cmd = ':set ' . a:opt . '! \| set ' . a:opt . "?\<CR>"
   exec 'nnoremap ' . a:key . ' ' . l:cmd
@@ -460,11 +463,7 @@ endfunction
 
 " Map key to toggle global variable. Value 1 will be assigned if original
 " value is 0.
-function! myutils#MapToggleVar(key, var) " {{{
-  execute 'nnoremap ' . a:key . ' :call myutils#ToggleVar(' . a:var . ')<CR>'
-endfunction
-
-function! myutils#ToggleVar(var)
+function! s:ToggleVar(var)
   execute "let l:varval=g:" . a:var
   if l:varval > 0
     let l:varval = 0
@@ -472,6 +471,10 @@ function! myutils#ToggleVar(var)
     let l:varval = 1
   endif
   execute "let g:" . a:var . "=l:varval"
+endfunction
+
+function! myutils#MapToggleVar(key, var) " {{{
+  execute 'nnoremap ' . a:key . ' :call <SID>ToggleVar(' . a:var . ')<CR>'
 endfunction
 " }}}
 

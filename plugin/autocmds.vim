@@ -13,3 +13,5 @@ augroup FiletypeFormat
   autocmd BufRead *.json setlocal filetype=json
   autocmd FileType conf setlocal nospell
 augroup END
+
+autocmd BufEnter * call myutils#SyncNTTree()
