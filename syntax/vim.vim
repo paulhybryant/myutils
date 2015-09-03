@@ -1,1 +1,1 @@
-syn keyword vimCommand contained NeoBundle NeoBundleFetch NeoBundleLazy NeoBundleCheck NeoBundleLocal
+syn keyword vimCommand contained NeoBundle NeoBundleFetch NeoBundleLazy NeoBundleCheck NeoBundleLocal NeoBundleDisable Glaive

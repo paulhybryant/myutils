@@ -9,6 +9,9 @@ command! Dos2Unix keepjumps call myutils#Dos2unixFunction()
 " Close the buffer window with confirmation
 command! Bclose call myutils#bufclose#BufcloseCloseIt(1)
 
+" Wrap the selected text in folds
+command! -range -nargs=1 WIF <line1>,<line2>call myutils#WrapInFold(<f-args>)
+
 " Create mappings to toggle global boolean (0/1) vars
 command! -nargs=+ MapToggleVar call myutils#MapToggleVar(<f-args>)
 
