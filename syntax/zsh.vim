@@ -1,7 +1,7 @@
 function! GetZshFold(lnum)
-  if getline(a:lnum) =~# '\v^function.*() \{$|.*\{\{\{'
+  if getline(a:lnum) =~# '\v^(function)?[^\(\)]*\(\) \{\s*#?.*$|.*\{\{\{'
     return 'a1'
-  elseif getline(a:lnum) =~# '\v^\}$|.*\}\}\}'
+  elseif getline(a:lnum) =~# '\v^\}\s*#?.*$|.*\}\}\}'
     return 's1'
   else
     return '='
