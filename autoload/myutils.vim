@@ -644,12 +644,20 @@ endfunction
 
 
 " Wrap the visually selected text in folds
-function! myutils#WrapInFold(fid) range abort " {{{
+function! myutils#WrapInFold(fid, insert) range abort " {{{
   execute 'normal ' . a:firstline . 'GO'
-  call setline(a:firstline, '"  {{{' . a:fid)
+  if a:insert
+    let l:foldpre = '  '
+  else
+    let l:foldpre = ' '
+  endif
+  let l:foldpre = '"' . l:foldpre . '{{{' . a:fid
+  call setline(a:firstline, l:foldpre)
   execute 'normal ' . (a:lastline + 1) . 'Go'
   call setline(a:lastline + 2, '" }}}')
   call setpos('.', [bufnr('%'), a:firstline, 3, 0])
-  startinsert
+  if a:insert
+    startinsert
+  endif
 endfunction
 " }}}

@@ -108,9 +108,12 @@ noremap <leader>hl :call myutils#HighlightTooLongLines()<CR>
 vmap <leader>y :call myutils#CopyText()<CR>
 vnoremap <leader>sn :call myutils#SortWords(' ', 1)<CR>
 vnoremap <leader>sw :call myutils#SortWords(' ', 0)<CR>
-vnoremap <leader>wf1 :WIF 1<CR>
-vnoremap <leader>wf2 :WIF 2<CR>
-vnoremap <leader>wf3 :WIF 3<CR>
+vnoremap <leader>wf1 :WIF 1 0<CR>
+vnoremap <leader>wf2 :WIF 2 0<CR>
+vnoremap <leader>wf3 :WIF 3 0<CR>
+vnoremap <leader>wfi1 :WIF 1 1<CR>
+vnoremap <leader>wfi2 :WIF 2 1<CR>
+vnoremap <leader>wfi3 :WIF 3 1<CR>
 
 " Unsed {{{
 " Adding newline and stay in normal mode.
