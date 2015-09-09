@@ -1,11 +1,41 @@
+# vim: filetype=snippet sw=2 ts=2 sts=2 et tw=80 foldlevel=0 foldmethod=marker nospell
+
 priority -30
 
-snippet poddoc "POD Documentation" b
+snippet podfbegin "POD start of zsh file documentation" b
+: <<=cut
+=pod
+
+=head1 NAME
+
+File: $0 - $1
+
+=head1 SYNOPSIS
+
+$2
+
+=head1 DESCRIPTION
+
+$3
+
+=head2 Methods
+
+=over 4
+=cut
+endsnippet
+
+snippet podfuc "POD zsh function documentation" b
 : <<=cut
 =item Function C<$0>
 
 $1
 
 @return $2
+=cut
+endsnippet
+
+snippet podfend "POD end of zsh file documentation" b
+: <<=cut
+=back
 =cut
 endsnippet
