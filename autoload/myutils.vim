@@ -1,7 +1,7 @@
 " vim: set sw=2 ts=2 sts=2 et tw=78 foldlevel=0 foldmethod=marker filetype=vim nospell:
 
 " Returns true iff is NERDTree open/active
-function! myutils#IsNTOpen() " {{{
+function! myutils#IsNTOpen() abort " {{{
     return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
 endfunction
 " }}}
@@ -9,7 +9,7 @@ endfunction
 
 " Calls NERDTreeFind iff NERDTree is active, current window contains a
 " modifiable file, and we're not in vimdiff
-function! myutils#SyncNTTree() " {{{
+function! myutils#SyncNTTree() abort " {{{
     if &modifiable && myutils#IsNTOpen() && strlen(expand('%')) > 0 && !&diff
         if !exists('t:NERDTreeBufName') || bufname('%') != t:NERDTreeBufName
             NERDTreeFind
@@ -21,7 +21,7 @@ endfunction
 
 
 " Sort words selected in visual mode in a single line, separated by space
-function! myutils#SortWords(delimiter, numeric) range " {{{
+function! myutils#SortWords(delimiter, numeric) range abort " {{{
     let l:delimiter = a:delimiter
     if a:firstline != a:lastline
         echomsg "Can only sort words in a single line."
@@ -46,7 +46,7 @@ endfunction
 
 
 " Functions for settping up tabline mappsing for different OSes
-function! s:SetupTablineMappingForMac() " {{{
+function! s:SetupTablineMappingForMac() abort " {{{
   silent! nmap <silent> <unique> ¡ <Plug>AirlineSelectTab1
   silent! nmap <silent> <unique> ™ <Plug>AirlineSelectTab2
   silent! nmap <silent> <unique> £ <Plug>AirlineSelectTab3
@@ -124,7 +124,7 @@ endfunction
 
 
 " Remove trailing whitespaces and ^M chars
-function! myutils#StripTrailingWhitespace() " {{{
+function! myutils#StripTrailingWhitespace() abort " {{{
   " Preparation: save last search, and cursor position.
   let _s=@/
   let l = line(".")
@@ -140,7 +140,7 @@ endfunction
 
 " Allow using command :E to edit multiple files
 " Only files (not directories) matched by the glob pattern will be edited
-function! myutils#MultiEdit(really, ...) " {{{
+function! myutils#MultiEdit(really, ...) abort " {{{
   if len(a:000)
     for globspec in a:000
       let l:files = split(glob(globspec), "\n")
@@ -162,7 +162,7 @@ let s:HexColored = 0
 let s:HexColors = []
 
 " Returns an approximate grey index for the given grey level
-function! s:grey_number(x) " {{{
+function! s:grey_number(x) abort " {{{
   if &t_Co == 88
     if a:x < 23
       return 0
@@ -202,7 +202,7 @@ endfunction
 " }}}
 
 " Returns the actual grey level represented by the grey index
-function! s:grey_level(n) " {{{
+function! s:grey_level(n) abort " {{{
   if &t_Co == 88
     if a:n == 0
       return 0
@@ -236,7 +236,7 @@ endfunction
 " }}}
 
 " Returns the palette index for the given grey index
-function! s:grey_color(n) " {{{
+function! s:grey_color(n) abort " {{{
   if &t_Co == 88
     if a:n == 0
       return 16
@@ -258,7 +258,7 @@ endfunction
 " }}}
 
 " Returns an approximate color index for the given color level
-function! s:rgb_number(x) " {{{
+function! s:rgb_number(x) abort " {{{
   if &t_Co == 88
     if a:x < 69
       return 0
@@ -286,7 +286,7 @@ endfunction
 " }}}
 
 " Returns the actual color level for the given color index
-function! s:rgb_level(n) " {{{
+function! s:rgb_level(n) abort " {{{
   if &t_Co == 88
     if a:n == 0
       return 0
@@ -308,7 +308,7 @@ endfunction
 " }}}
 
 " Returns the palette index for the given R/G/B color indices
-function! s:rgb_color(x, y, z) " {{{
+function! s:rgb_color(x, y, z) abort " {{{
   if &t_Co == 88
     return 16 + (a:x * 16) + (a:y * 4) + a:z
   else
@@ -318,7 +318,7 @@ endfunction
 " }}}
 
 " Returns the palette index to approximate the given R/G/B color levels
-function! s:color(r, g, b) " {{{
+function! s:color(r, g, b) abort " {{{
   " get the closest grey
   let l:gx = s:grey_number(a:r)
   let l:gy = s:grey_number(a:g)
@@ -354,7 +354,7 @@ endfunction
 " }}}
 
 " Returns the palette index to approximate the '#rrggbb' hex string
-function! s:rgb(rgb) " {{{
+function! s:rgb(rgb) abort " {{{
   let l:r = ("0x" . strpart(a:rgb, 1, 2)) + 0
   let l:g = ("0x" . strpart(a:rgb, 3, 2)) + 0
   let l:b = ("0x" . strpart(a:rgb, 5, 2)) + 0
@@ -364,7 +364,7 @@ endfunction
 " }}}
 
 " Highlight the hex string
-function! myutils#HexHighlight() " {{{
+function! myutils#HexHighlight() abort " {{{
   if !((&t_Co == 256) || has("gui_running"))
     echo "t_Co must be set to 256 or vim must be in gui mode."
     return
@@ -405,7 +405,7 @@ endfunction
 
 
 " Wrapper for Decho to echo debug information from a command execution
-function! myutils#DechoCmd(cmd) " {{{
+function! myutils#DechoCmd(cmd) abort " {{{
   redir => l:msg
   silent execute a:cmd
   redir END
@@ -415,7 +415,7 @@ endfunction
 
 
 " Enable jumping using location list when only one error exists
-function! myutils#LocationPrevious() " {{{
+function! myutils#LocationPrevious() abort " {{{
   try
     lprev
   catch /^Vim\%((\a\+)\)\=:E553/
@@ -434,7 +434,7 @@ endfunction
 
 
 " Insert charater char from current position until the cursor reaches column n
-function! myutils#FillWithCharTillN(char, n) " {{{
+function! myutils#FillWithCharTillN(char, n) abort " {{{
   let l:col = getpos('.')[2]
   if l:col >= a:n
     return
@@ -453,7 +453,7 @@ endfunction
 " Display-altering option toggles
 " nnoremap <leader>ts :let &spell = !&spell<CR>
 " MapToggle <F2> spell
-function! myutils#MapToggle(key, opt) "  {{{
+function! myutils#MapToggle(key, opt) abort "  {{{
   let l:cmd = ':set ' . a:opt . '! \| set ' . a:opt . "?\<CR>"
   exec 'nnoremap ' . a:key . ' ' . l:cmd
   exec 'inoremap ' . a:key . " \<C-O>" . l:cmd
@@ -463,6 +463,10 @@ endfunction
 
 " Map key to toggle global variable. Value 1 will be assigned if original
 " value is 0.
+function! myutils#MapToggleVar(key, var) abort " {{{
+  execute 'nnoremap ' . a:key . ' :call <SID>ToggleVar(' . a:var . ')<CR>'
+endfunction
+
 function! s:ToggleVar(var)
   execute "let l:varval=g:" . a:var
   if l:varval > 0
@@ -472,15 +476,11 @@ function! s:ToggleVar(var)
   endif
   execute "let g:" . a:var . "=l:varval"
 endfunction
-
-function! myutils#MapToggleVar(key, var) " {{{
-  execute 'nnoremap ' . a:key . ' :call <SID>ToggleVar(' . a:var . ')<CR>'
-endfunction
 " }}}
 
 
 " Highlight columns that is larger than textwidth
-function! myutils#HighlightTooLongLines() "  {{{
+function! myutils#HighlightTooLongLines() abort " {{{
   if !exists('g:htll') || g:htll == 0
     let g:htll = 1
     highlight def link RightMargin Error
@@ -499,7 +499,7 @@ endfunction
 
 
 " Highlight columns from 81 - 120 to red
-function! myutils#ToggleColorColumn() "  {{{
+function! myutils#ToggleColorColumn() abort " {{{
   if &colorcolumn
     let &colorcolumn = ""
   else
@@ -511,7 +511,7 @@ endfunction
 
 " Copy selected text to system clipboard and prevent it from clearing
 " clipboard when using ctrl+z (depends on xsel)
-function! myutils#CopyText() "  {{{
+function! myutils#CopyText() abort " {{{
 
   normal gv"+y
   " call system('xsel -ib', getreg('+'))
@@ -521,7 +521,7 @@ endfunction
 
 
 " Insert repeated strings according to a pattern / template
-function! myutils#InsertRepeated(tmpl, lower, upper) " {{{
+function! myutils#InsertRepeated(tmpl, lower, upper) abort " {{{
   let l:strs = split(a:tmpl, "%i", 1)
   for i in range(a:lower, a:upper)
     let l:str = join(l:strs, "" . i)
@@ -536,7 +536,7 @@ endfunction
 
 
 " Test whether a specific syntax group exists
-function! myutils#SyntaxGroupExists(group_name) " {{{
+function! myutils#SyntaxGroupExists(group_name) abort " {{{
   let l:syntaxes=""
   redir => l:syntaxes
   silent syntax
@@ -547,7 +547,7 @@ endfunction
 
 
 " Get the definition of a syntax group
-function! myutils#GetSynGroup(group_name) " {{{
+function! myutils#GetSynGroup(group_name) abort " {{{
   let l:syngroup=""
   redir => l:syngroup
   execute "silent! syntax list " . a:group_name
@@ -570,8 +570,8 @@ endfunction
 " Mac OSX. If the remote host is linux, consider using xclip and x forwarding.
 " Couldn't get x forwarding and xclip to work in Mac OSX, and ubuntu remote host
 " is not tried.
-function! myutils#YankToRemoteClipboard() " {{{
-  let l:reg = getreg("*")
+function! myutils#YankToRemoteClipboard() abort " {{{
+  let l:reg = shellescape(getreg("*"))
   " let l:reg = substitute(l:reg, "'", "\\\\'", "g")
   " let l:reg = substitute(l:reg, "\x0a", "", "")
   let l:cmd = printf("echo -n '%s' \| nc localhost 8377", l:reg)
@@ -581,7 +581,7 @@ endfunction
 
 
 " Find the window among all windows that with w:id equals to wid
-function! myutils#FindWindowWithId(wid) " {{{
+function! myutils#FindWindowWithId(wid) abort " {{{
   for tabnr in range(1, tabpagenr('$'))
     for winnr in range(1, tabpagewinnr(tabnr, '$'))
       if gettabwinvar(tabnr, winnr, 'id') is a:wid
@@ -595,7 +595,7 @@ endfunction
 
 
 " Converts a file with MS-DOS line ending to UNIX line ending
-function! Dos2unixFunction() "{{{
+function! myutils#Dos2unixFunction() abort "{{{
   let _s=@/
   let l = line(".")
   let c = col(".")
@@ -613,7 +613,7 @@ endfun
 
 
 " Initialization directories and settings for undo, swap and views.
-function! myutils#InitUndoSwapViews() " {{{
+function! myutils#InitUndoSwapViews() abort " {{{
   let l:prefix = expand('~/.vim/')
   let l:dir_list = {
         \ '.vimbackup' : 'backupdir',
@@ -659,5 +659,53 @@ function! myutils#WrapInFold(fid, insert) range abort " {{{
   if a:insert
     startinsert
   endif
+endfunction
+" }}}
+
+
+" Sort a set of folded text blocks by its foldtext. Only sorts the top level
+" folds. The folds must be all closed when this is called.
+function! myutils#SortFoldByFoldtext() range abort " {{{
+  if empty(&foldmarker)
+    return
+  endif
+  " Close all folds first
+  execute (a:firstline) . ',' . (a:lastline) . 'foldopen!'
+  execute (a:firstline) . ',' . (a:lastline) . 'foldclose'
+  let l:foldmarkers = split(&foldmarker, ',')
+  let l:folds = {}
+  let l:foldstart_pat = '\v.*' . escape(l:foldmarkers[0], '{') . '.*$'
+  let l:foldend_pat = '\v.*' . escape(l:foldmarkers[1], '{') . '.*$'
+  let l:foldnestlevel = 0
+  for i in range(a:firstline, a:lastline)
+    if getline(i) =~# l:foldstart_pat
+      if l:foldnestlevel == 0
+        let l:foldstart = i
+      endif
+      let l:foldnestlevel += 1
+    elseif getline(i) =~# l:foldend_pat
+      let l:foldnestlevel -= 1
+      if l:foldnestlevel == 0
+        let l:foldend = i
+        let l:summary = matchstr(
+              \ foldtextresult(l:foldstart),
+              \ '\v^\+-+\s*[0-9]+ lines: \zs(.*)\ze')
+        call extend(l:folds, { l:summary : [l:foldstart, l:foldend]})
+      endif
+    endif
+  endfor
+  let l:keys = sort(keys(l:folds))
+  let l:lines = []
+  for key in l:keys
+    let l:fold = get(l:folds, key)
+    for i in range(l:fold[0], l:fold[1])
+      call add(l:lines, getline(i))
+    endfor
+  endfor
+  call maktaba#buffer#Overwrite(a:firstline, a:lastline, l:lines)
+  " The folds are messed up after that. doautocmd to rebuild the folds
+  " TODO: How to avoid this?
+  doautocmd
+  execute a:firstline . 'foldopen'
 endfunction
 " }}}
