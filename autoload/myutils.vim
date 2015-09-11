@@ -480,18 +480,18 @@ endfunction
 
 
 " Highlight columns that is larger than textwidth
-function! myutils#HighlightTooLongLines() abort " {{{
-  if !exists('g:htll') || g:htll == 0
-    let g:htll = 1
+function! myutils#HighlightTooLongLines() "  {{{
+  if !exists('b:htll') || b:htll == 0
+    let b:htll = 1
     highlight def link RightMargin Error
-    sign define errlongline text=>> texthl=ErrorMsg
+    " sign define errlongline text=>> texthl=ErrorMsg
     if &textwidth != 0
-      let g:htllm = matchadd('ErrorMsg', '\%>' . &l:textwidth . 'v.\+', -1)
+      let b:htllm = matchadd('ErrorMsg', '\%>' . &l:textwidth . 'v.\+', -1)
     endif
   else
-    let g:htll = 0
-    if (exists('g:htllm'))
-      call matchdelete(g:htllm)
+    let b:htll = 0
+    if (exists('b:htllm'))
+      call matchdelete(b:htllm)
     endif
   endif
 endfunction
