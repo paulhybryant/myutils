@@ -1,5 +1,5 @@
 function! GetZshFold(lnum)
-  if getline(a:lnum) =~# '\v^\s*(function)?[^\(\)]*\(\) \{\s*#?.*$|.*\{\{\{$|^: \<\<\=cut$'
+  if getline(a:lnum) =~# '\v^\s*(function)?[^\(\)]*\(\) \{\s*#?.*$|.*\{\{\{$|.*\{$|^: \<\<\=cut$'
     return 'a1'
   elseif getline(a:lnum) =~# '\v^\s*\}\s*#?.*$|.*\}\}\}$|^=cut$'
     return 's1'
