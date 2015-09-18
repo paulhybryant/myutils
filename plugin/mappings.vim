@@ -19,6 +19,10 @@ nnoremap gj j
 nnoremap k gk
 nnoremap gk k
 
+" Quickly move in a line.
+nnoremap H ^
+nnoremap L $
+
 " Concatenate two lines without whitespace at the end
 nnoremap J gJ
 nnoremap gJ J

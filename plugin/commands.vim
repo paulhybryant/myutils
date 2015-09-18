@@ -22,5 +22,6 @@ command! -nargs=+ InsertRepeated call myutils#InsertRepeated(<f-args>)
 
 command! -range SortFolds <line1>,<line2>call myutils#SortFoldByFoldtext()
 
-" Deprecated in favor of vim-onoff
-" command! -nargs=+ MapToggle call myutils#MapToggle(<f-args>)
+command! -range -nargs=+ SortWords <line1>,<line2>call myutils#SortWords(<f-args>)
+
+command! -nargs=+ MapToggle call myutils#MapToggle(<f-args>)

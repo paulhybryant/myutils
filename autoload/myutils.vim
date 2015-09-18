@@ -2,7 +2,7 @@
 
 " Returns true iff is NERDTree open/active
 function! myutils#IsNTOpen() abort " {{{
-    return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
+  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
 endfunction
 " }}}
 
@@ -10,37 +10,33 @@ endfunction
 " Calls NERDTreeFind iff NERDTree is active, current window contains a
 " modifiable file, and we're not in vimdiff
 function! myutils#SyncNTTree() abort " {{{
-    if &modifiable && myutils#IsNTOpen() && strlen(expand('%')) > 0 && !&diff
-        if !exists('t:NERDTreeBufName') || bufname('%') != t:NERDTreeBufName
-            NERDTreeFind
-            wincmd p
-        endif
+  if &modifiable && myutils#IsNTOpen() && strlen(expand('%')) > 0 && !&diff
+    if !exists('t:NERDTreeBufName') || bufname('%') != t:NERDTreeBufName
+      NERDTreeFind
+      wincmd p
     endif
+  endif
 endfunction
 " }}}
 
 
 " Sort words selected in visual mode in a single line, separated by space
 function! myutils#SortWords(delimiter, numeric) range abort " {{{
-    let l:delimiter = a:delimiter
-    if a:firstline != a:lastline
-        echomsg "Can only sort words in a single line."
-    endif
-    if len(l:delimiter) != 1
-        let l:delimiter = ' '
-    endif
-    " yank current visual selection to reg x
-    normal gv"xy
-    " split the words selected and sort
-    if a:numeric
-        let @x = join(sort(map(split(@x, l:delimiter), 'str2nr(v:val)'), 'n'), l:delimiter)
-    else
-        let @x = join(sort(split(@x, l:delimiter)), l:delimiter)
-    endif
-    " re-select area and delete
-    normal gvd
-    " paste sorted words back in
-    normal "xP
+  if a:firstline != a:lastline
+    echoerr "Can only sort words in a single line."
+  endif
+  " yank current visual selection to reg x
+  normal gv"xy
+  " split the words selected and sort
+  if a:numeric
+    let @x = join(sort(map(split(@x, a:delimiter), 'str2nr(v:val)'), 'n'), a:delimiter)
+  else
+    let @x = join(sort(split(@x, a:delimiter)), a:delimiter)
+  endif
+  " re-select area and delete
+  normal gvd
+  " paste sorted words back in
+  normal "xP
 endfunction
 " }}}
 
@@ -530,7 +526,7 @@ function! myutils#InsertRepeated(tmpl, lower, upper) abort " {{{
 endfunction
 
 " function! myutils#InsertRepeated(tmpl, lower, upper)
-  " put =map(range(a:lower, a:upper), 'printf(''%d'', v:val)')
+" put =map(range(a:lower, a:upper), 'printf(''%d'', v:val)')
 " endfunction
 " }}}
 
@@ -600,11 +596,11 @@ function! myutils#Dos2unixFunction() abort "{{{
   let l = line(".")
   let c = col(".")
   try
-      set ff=unix
-      w!
-      "%s/\%x0d$//e
+    set ff=unix
+    w!
+    "%s/\%x0d$//e
   catch /E32:/
-      echo "Sorry, the file is not saved."
+    echo "Sorry, the file is not saved."
   endtry
   let @/=_s
   call cursor(l, c)
