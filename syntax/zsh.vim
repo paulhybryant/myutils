@@ -13,7 +13,7 @@ function! s:GetFileInfo(start)
   while l:lnum <= v:foldend
     let l:line = getline(l:lnum)
     if l:line =~# '\v^File:'
-      return matchstr(l:line, '\vFile: \zs(.*)') . ' '
+      return matchstr(l:line, '\v^File: \zs(.*)') . ' '
     endif
     let l:lnum += 1
   endwhile

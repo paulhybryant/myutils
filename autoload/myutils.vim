@@ -641,16 +641,18 @@ endfunction
 
 " Wrap the visually selected text in folds
 function! myutils#WrapInFold(fid, insert) range abort " {{{
+  let l:line = getline(a:firstline)
   execute 'normal ' . a:firstline . 'GO'
+  let l:indent = matchstr(l:line, '\v^\zs(\s*)\zeNeoBundle')
   if a:insert
     let l:foldpre = '  '
   else
     let l:foldpre = ' '
   endif
-  let l:foldpre = '"' . l:foldpre . '{{{' . a:fid
+  let l:foldpre = l:indent. '"' . l:foldpre . '{{{' . a:fid
   call setline(a:firstline, l:foldpre)
   execute 'normal ' . (a:lastline + 1) . 'Go'
-  call setline(a:lastline + 2, '" }}}')
+  call setline(a:lastline + 2, l:indent . '" }}}')
   call setpos('.', [bufnr('%'), a:firstline, 3, 0])
   if a:insert
     startinsert
