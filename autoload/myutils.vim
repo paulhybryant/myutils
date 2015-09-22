@@ -664,34 +664,9 @@ endfunction
 " Sort a set of folded text blocks by its foldtext. Only sorts the top level
 " folds. The folds must be all closed when this is called.
 function! myutils#SortFoldByFoldtext() range abort " {{{
-  if empty(&foldmarker)
-    return
-  endif
-  " Close all folds first
   execute (a:firstline) . ',' . (a:lastline) . 'foldopen!'
   execute (a:firstline) . ',' . (a:lastline) . 'foldclose'
-  let l:foldmarkers = split(&foldmarker, ',')
-  let l:folds = {}
-  let l:foldstart_pat = '\v.*' . escape(l:foldmarkers[0], '{') . '.*$'
-  let l:foldend_pat = '\v.*' . escape(l:foldmarkers[1], '{') . '.*$'
-  let l:foldnestlevel = 0
-  for i in range(a:firstline, a:lastline)
-    if getline(i) =~# l:foldstart_pat
-      if l:foldnestlevel == 0
-        let l:foldstart = i
-      endif
-      let l:foldnestlevel += 1
-    elseif getline(i) =~# l:foldend_pat
-      let l:foldnestlevel -= 1
-      if l:foldnestlevel == 0
-        let l:foldend = i
-        let l:summary = matchstr(
-              \ foldtextresult(l:foldstart),
-              \ '\v^\+-+\s*[0-9]+ lines: \zs(.*)\ze')
-        call extend(l:folds, { l:summary : [l:foldstart, l:foldend]})
-      endif
-    endif
-  endfor
+  let l:folds = s:GetFolds(a:firstline, a:lastline)
   let l:keys = sort(keys(l:folds))
   let l:lines = []
   for key in l:keys
@@ -705,5 +680,24 @@ function! myutils#SortFoldByFoldtext() range abort " {{{
   " TODO: How to avoid this?
   doautocmd
   execute a:firstline . 'foldopen'
+endfunction
+
+function! s:GetFolds(start, end) abort
+  let l:folds = {}
+  let l:foldend = a:start
+  while l:foldend < a:end
+    let l:foldstart = foldclosed(l:foldend)
+    let l:foldend = foldclosedend(l:foldend)
+    if l:foldstart == -1 || l:foldend == -1
+      let l:foldend += 1
+      continue
+    endif
+    let l:summary = matchstr(
+          \ foldtextresult(l:foldstart),
+          \ '\v^\+-+\s*[0-9]+ lines: \zs(.*)\ze')
+    call extend(l:folds, { l:summary : [l:foldstart, l:foldend]})
+    let l:foldend += 1
+  endwhile
+  return l:folds
 endfunction
 " }}}
