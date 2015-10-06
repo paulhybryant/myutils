@@ -12,7 +12,7 @@ augroup FiletypeFormat
         \ tw=80 foldlevel=0 foldmethod=marker nospell
   autocmd BufRead *.json setlocal filetype=json
   autocmd FileType conf setlocal nospell
-  autocmd FileType vtd execute 'VtdView' | execute 'normal A'
+  autocmd FileType vtd if ! &diff | execute 'VtdView' | execute 'normal A' | endif
 augroup END
 
 autocmd BufEnter * call myutils#SyncNTTree()
