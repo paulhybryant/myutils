@@ -567,11 +567,9 @@ endfunction
 " Couldn't get x forwarding and xclip to work in Mac OSX, and ubuntu remote host
 " is not tried.
 function! myutils#YankToRemoteClipboard() abort " {{{
-  let l:reg = shellescape(getreg("*"))
+  let l:reg = shellescape(substitute(getreg('*'), "\x0a", "", ""))
   " let l:reg = substitute(l:reg, "'", "\\\\'", "g")
-  " let l:reg = substitute(l:reg, "\x0a", "", "")
-  let l:cmd = printf("echo -n '%s' \| nc localhost 8377", l:reg)
-  call system(l:cmd)
+  call system('echo -n ' . l:reg . ' | nc -c localhost 8377')
 endfunction
 " }}}
 
