@@ -22,7 +22,7 @@ endif
 
 runtime! syntax_checkers/sh/*.vim
 
-let g:syntastic_zsh_shellcheck_args = '-s bash'
+let g:syntastic_zsh_shellcheck_args = '-s bash -x'
 
 call g:SyntasticRegistry.CreateAndRegisterChecker({
     \ 'filetype': 'zsh',
