@@ -120,6 +120,12 @@ vnoremap <leader>wfi1 :WIF 1 1<CR>
 vnoremap <leader>wfi2 :WIF 2 1<CR>
 vnoremap <leader>wfi3 :WIF 3 1<CR>
 
+" Vim keymappings to avoid pinky kuckle pain
+nnoremap d 
+nnoremap u 
+nmap s 
+imap s 
+
 " Unsed {{{
 " Adding newline and stay in normal mode.
 " <S-Enter> is not reflected, maybe captured by the tmux binding
