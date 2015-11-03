@@ -38,6 +38,14 @@ nnoremap <C-b> <C-v>
 cnoremap <C-b> <C-v>
 inoremap <C-b> <C-v>
 
+" Use C-v to paste, this is needed in GVIM. In terminal vim this is handled by
+" the terminal already. If not that will also be captured by this mapping.
+if &clipboard == 'unnamedplus'
+  inoremap <C-v> <C-r><C-o>+
+else
+  inoremap <C-v> <C-r><C-o>*
+endif
+
 " Ctrl-Tab only works in gvim
 if has('gui_running')
     nnoremap <C-Tab> :bn<CR>
@@ -121,10 +129,11 @@ vnoremap <leader>wfi2 :WIF 2 1<CR>
 vnoremap <leader>wfi3 :WIF 3 1<CR>
 
 " Vim keymappings to avoid pinky kuckle pain
-nnoremap d 
-nnoremap u 
-nmap s 
-imap s 
+" This is deprecated by swapping the ctrl and alt key using setxkbmap.
+" nnoremap d 
+" nnoremap u 
+" nmap s 
+" imap s 
 
 " Unsed {{{
 " Adding newline and stay in normal mode.
