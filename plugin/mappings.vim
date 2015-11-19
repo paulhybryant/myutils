@@ -46,6 +46,11 @@ else
   inoremap <C-v> <C-r><C-o>*
 endif
 
+if "$SSH_OS" == 'Darwin'
+  let l:port = 8377
+  vnoremap y y:call system('nc -c localhost ' . l:port, @0)<CR>
+endif
+
 " Ctrl-Tab only works in gvim
 if has('gui_running')
     nnoremap <C-Tab> :bn<CR>
