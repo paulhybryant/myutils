@@ -25,3 +25,5 @@ command! -range SortFolds <line1>,<line2>call myutils#SortFoldByFoldtext()
 command! -range -nargs=+ SortWords <line1>,<line2>call myutils#SortWords(<f-args>)
 
 command! -nargs=+ MapToggle call myutils#MapToggle(<f-args>)
+
+command! -bar RangerChooser call myutils#RangerChooser()

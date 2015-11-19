@@ -128,6 +128,8 @@ vnoremap <leader>wfi1 :WIF 1 1<CR>
 vnoremap <leader>wfi2 :WIF 2 1<CR>
 vnoremap <leader>wfi3 :WIF 3 1<CR>
 
+nnoremap <leader>rf :<C-U>RangerChooser<CR>
+
 " Vim keymappings to avoid pinky kuckle pain
 " This is deprecated by swapping the ctrl and alt key using setxkbmap.
 " nnoremap d 
