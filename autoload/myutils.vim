@@ -97,20 +97,12 @@ let s:tablinefns = {
       \ }
 function! myutils#SetupTablineMappings(OS)
   let l:os = ''
-  if empty($SSH_CLIENT) || empty($SSH_OS)
-    if a:OS.is_mac
-      let l:os = 'mac'
-    elseif a:OS.is_linux
-      let l:os = 'linux'
-    elseif a:OS.is_windows
-      let l:os = 'windows'
-    endif
-  else
-    if $SSH_OS == 'Darwin'
-      let l:os = 'mac'
-    elseif $SSH_OS == 'Linux'
-      let l:os = 'linux'
-    endif
+  if a:OS.is_mac
+    let l:os = 'mac'
+  elseif a:OS.is_linux
+    let l:os = 'linux'
+  elseif a:OS.is_windows
+    let l:os = 'windows'
   endif
   if !empty(l:os)
     call call(s:tablinefns[l:os], [])

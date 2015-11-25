@@ -116,7 +116,6 @@ nnoremap <F9> :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name')
 nnoremap zO [zzczO<C-O>
 
 nnoremap <leader>hh :call myutils#HexHighlight()<CR>
-nnoremap <leader>kb :call myutils#SetupTablineMappings(g:OS)<CR>
 nnoremap <leader>ln :<C-u>execute 'call myutils#LocationNext()'<CR>
 nnoremap <leader>lp :<C-u>execute 'call myutils#LocationPrevious()'<CR>
 nnoremap <leader>tc :call myutils#ToggleColorColumn()<CR>
