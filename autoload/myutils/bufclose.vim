@@ -1,5 +1,16 @@
 let s:plugin = maktaba#plugin#Get('myutils')
 
+let s:buffers = []
+
+function! myutils#bufclose#BufcloseUncloseIt() " {{{
+  if len(s:buffers) > 0
+    let [l:num, l:name] = remove(s:buffers, 0)
+    exec 'badd ' . l:name
+    exec 'b' . l:num
+  endif
+endfunction
+" }}}
+
 " Confirm saving buffers before it is closed and quit vim if the closed buffer
 " is the last buffer.
 function! myutils#bufclose#BufcloseCloseIt(confirm) " {{{
@@ -25,8 +36,9 @@ function! myutils#bufclose#BufcloseCloseIt(confirm) " {{{
     execute('qa!')
   else
     if s:GetNumberOfNormalWindows() == 1
+      call insert(s:buffers, [l:currentBufNum, expand('%:p')], 0)
       execute('b! ' . l:next_bufnr)
-      execute('bdelete! '.l:currentBufNum)
+      execute('bdelete! ' . l:currentBufNum)
     else
       execute 'wincmd q'
     endif

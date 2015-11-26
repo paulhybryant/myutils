@@ -428,11 +428,11 @@ function! myutils#FillWithCharTillN(char, n) abort " {{{
     return
   endif
 
-  let l:num_chars = a:n - l:col
+  let l:num_chars = a:n - l:col + 1
   if (strlen(getline('.')) == 0)
     let l:num_chars += 1
   endif
-  exec "normal a" . repeat(a:char, l:num_chars)
+  exec "normal i" . repeat(a:char, l:num_chars)
 endfunction
 " }}}
 

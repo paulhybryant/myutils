@@ -9,6 +9,9 @@ command! Dos2Unix keepjumps call myutils#Dos2unixFunction()
 " Close the buffer window with confirmation
 command! Bclose call myutils#bufclose#BufcloseCloseIt(1)
 
+" Open closed buffer in reverse close order
+command! Bunclose call myutils#bufclose#BufcloseUncloseIt()
+
 " Wrap the selected text in folds
 command! -range -nargs=* WIF <line1>,<line2>call myutils#WrapInFold(<f-args>)
 
