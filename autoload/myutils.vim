@@ -498,12 +498,9 @@ endfunction
 
 
 " Copy selected text to system clipboard and prevent it from clearing
-" clipboard when using ctrl+z (depends on xsel)
+" clipboard when using ctrl+z
 function! myutils#CopyText() abort " {{{
-
-  normal gv"+y
-  " call system('xsel -ib', getreg('+'))
-  call system('echo "' . getreg('+') . '" | xsel -i')
+  call system('echo "' . getreg('+') . '" | xclipper -selection clipboard -i')
 endfunction
 " }}}
 

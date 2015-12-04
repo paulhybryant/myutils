@@ -117,7 +117,7 @@ nnoremap <leader>lp :<C-u>execute 'call myutils#LocationPrevious()'<CR>
 nnoremap <leader>tc :call myutils#ToggleColorColumn()<CR>
 nnoremap <leader>is :call myutils#FillWithCharTillN(' ', 80)<CR>
 noremap <leader>hl :call myutils#HighlightTooLongLines()<CR>
-vmap <leader>y :call myutils#CopyText()<CR>
+vnoremap y "+y:call myutils#CopyText()<CR>
 vnoremap <leader>sn :call myutils#SortWords(' ', 1)<CR>
 vnoremap <leader>sw :call myutils#SortWords(' ', 0)<CR>
 vnoremap <leader>wf1 :WIF 1 0<CR>
