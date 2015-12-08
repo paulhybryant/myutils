@@ -111,13 +111,13 @@ nnoremap <F9> :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name')
 " Open all folds in the direct fold that contains current location
 nnoremap zO [zzczO<C-O>
 
-nnoremap <leader>hh :call myutils#HexHighlight()<CR>
+nnoremap <leader>he :call myutils#HexHighlight()<CR>
 nnoremap <leader>ln :<C-u>execute 'call myutils#LocationNext()'<CR>
 nnoremap <leader>lp :<C-u>execute 'call myutils#LocationPrevious()'<CR>
 nnoremap <leader>tc :call myutils#ToggleColorColumn()<CR>
 nnoremap <leader>is :call myutils#FillWithCharTillN(' ', 80)<CR>
 noremap <leader>hl :call myutils#HighlightTooLongLines()<CR>
-vnoremap y "+y:call myutils#CopyText()<CR>
+vnoremap y y:call myutils#CopyText()<CR>
 nnoremap yy Vy
 " vnoremap y y:call myutils#CopyText()<CR>
 vnoremap <leader>sn :call myutils#SortWords(' ', 1)<CR>
