@@ -16,3 +16,14 @@ augroup FiletypeFormat
 augroup END
 
 autocmd BufEnter * call myutils#SyncNTTree()
+
+if s:plugin.Flag('use_cmdwin')
+  augroup CmdWin
+    " musn't do au! again
+    au CmdwinEnter * inoremap %% <C-r>=expand('#:h').'/'<CR>
+    au CmdwinEnter * nnoremap <C-Q> :q<CR>
+
+    au CmdwinLeave * nunmap <C-Q>
+    au CmdwinLeave * iunmap %%
+  augroup END
+endif

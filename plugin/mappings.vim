@@ -131,6 +131,10 @@ vnoremap <leader>wfi3 :WIF 3 1<CR>
 
 nnoremap <leader>rf :<C-U>RangerChooser<CR>
 
+if s:plugin.Flag('use_cmdwin')
+  nnoremap : q:i
+endif
+
 " Vim keymappings to avoid pinky kuckle pain
 " This is deprecated by swapping the ctrl and alt key using setxkbmap.
 " nnoremap d 
