@@ -520,11 +520,7 @@ function! myutils#CopyText() abort " {{{
   " Preserve single quotes
   let l:reg = substitute(l:reg, "'", "'\"'\"'", "g")
   " let l:reg = shellescape(substitute(l:reg, "\x0a", "", ""))
-  if g:OS.is_mac
-    let l:cmd = 'echo ''' . l:reg . ''' | xclipper -selection clipboard -i'
-  else
-    let l:cmd = 'echo -n ''' . l:reg . ''' | xclipper -selection clipboard -i'
-  endif
+  let l:cmd = '/bin/echo -n ''' . l:reg . ''' | xclipper -selection clipboard -i'
   DebugEcho l:cmd
   call system(l:cmd)
 endfunction
