@@ -508,7 +508,9 @@ function! myutils#CopyText() abort " {{{
   " Preserve single quotes
   let l:reg = substitute(l:reg, "'", "'\"'\"'", "g")
   " let l:reg = shellescape(substitute(l:reg, "\x0a", "", ""))
-  call system('echo ''' . l:reg . ''' | xclipper -selection clipboard -i')
+  let l:cmd = 'echo -n ''' . l:reg . ''' | xclipper -selection clipboard -i'
+  Decho l:cmd
+  call system(l:cmd)
 endfunction
 " }}}
 
