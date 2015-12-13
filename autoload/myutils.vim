@@ -392,6 +392,18 @@ endfunction
 " }}}
 
 
+" Wrapper for Decho to enable / disable it conveniently
+function! myutils#Decho(msg) abort " {{{
+  if !exists('g:decho_enable')
+    let g:decho_enable = 0
+  endif
+  if g:decho_enable
+    Decho a:msg
+  endif
+endfunction
+" }}}
+
+
 " Wrapper for Decho to echo debug information from a command execution
 function! myutils#DechoCmd(cmd) abort " {{{
   redir => l:msg
@@ -509,7 +521,7 @@ function! myutils#CopyText() abort " {{{
   let l:reg = substitute(l:reg, "'", "'\"'\"'", "g")
   " let l:reg = shellescape(substitute(l:reg, "\x0a", "", ""))
   let l:cmd = 'echo -n ''' . l:reg . ''' | xclipper -selection clipboard -i'
-  Decho l:cmd
+  DebugEcho l:cmd
   call system(l:cmd)
 endfunction
 " }}}
