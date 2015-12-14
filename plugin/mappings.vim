@@ -134,7 +134,7 @@ if s:plugin.Flag('use_cmdwin')
   nnoremap : q:i
 endif
 
-Automatically jump to end of text pasted
+" Automatically jump to end of text pasted
 vnoremap <silent> Y y`]
 vnoremap <silent> P p`]
 nnoremap <silent> P p`]`
