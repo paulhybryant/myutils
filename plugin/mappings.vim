@@ -4,140 +4,141 @@ if !s:enter
 endif
 
 " Send the content in register with OCS52 control sequence.
-vnoremap <C-c> y:call myutils#osc52#SendViaOSC52(getreg('"'))<CR>
+vnoremap <unique> <C-c> y:call myutils#osc52#SendViaOSC52(getreg('"'))<CR>
 
 " Use <C-Q> to close buffer window quickly.
-inoremap <C-q> <ESC>:Bclose<cr>
-nnoremap <C-q> :Bclose<cr>
+inoremap <unique> <silent> <C-q> <ESC>:Bclose<cr>
+nnoremap <unique> <silent> <C-q> :Bclose<cr>
 
 " Disable key to enter ex mode
-nnoremap Q <nop>
+nnoremap <unique> Q <nop>
 
 " Wrapped lines goes down/up to next row, rather than next line in file.
-nnoremap j gj
-nnoremap gj j
-nnoremap k gk
-nnoremap gk k
+nnoremap <unique> j gj
+nnoremap <unique> gj j
+nnoremap <unique> k gk
+nnoremap <unique> gk k
 
 " Quickly move in a line.
-nnoremap H ^
-nnoremap L $
+nnoremap <unique> H ^
+nnoremap <unique> L $
 
 " Concatenate two lines without whitespace at the end
-nnoremap J gJ
-nnoremap gJ J
+nnoremap <unique> J gJ
+nnoremap <unique> gJ J
 
 " Visual shifting (does not exit Visual mode)
-vnoremap < <gv
-vnoremap > >gv
+vnoremap <unique> < <gv
+vnoremap <unique> > >gv
 
 " Use C-b to enter visual block mode from normal mode
-nnoremap <C-b> <C-v>
+nnoremap <unique> <C-b> <C-v>
 
 " Use C-b to enter literal inputs in command mode
-cnoremap <C-b> <C-v>
-inoremap <C-b> <C-v>
+cnoremap <unique> <C-b> <C-v>
+inoremap <unique> <C-b> <C-v>
 
 " Use C-v to paste, this is needed in GVIM. In terminal vim this is handled by
 " the terminal already. If not that will also be captured by this mapping.
 if &clipboard == 'unnamedplus'
-  inoremap <C-v> <C-r><C-o>+
+  inoremap <unique> <C-v> <C-r><C-o>+
 else
-  inoremap <C-v> <C-r><C-o>*
+  inoremap <unique> <C-v> <C-r><C-o>*
 endif
 
 " Ctrl-Tab only works in gvim
 if has('gui_running')
-    nnoremap <C-Tab> :bn<CR>
-    nnoremap <C-S-Tab> :bp<CR>
+    nnoremap <unique> <C-Tab> :bn<CR>
+    nnoremap <unique> <C-S-Tab> :bp<CR>
 else
     " The keycodes received by vim for <Tab> and <C-Tab> from most terminal
     " emulators are the same. So <Tab> is mapped here but one can also use
     " <C-Tab> to switch buffers. Same for <S-Tab>.
-    nnoremap <Tab> :bn<CR>
-    nnoremap <S-Tab> :bp<CR>
+    nnoremap <unique> <Tab> :bn<CR>
+    nnoremap <unique> <S-Tab> :bp<CR>
 endif
 
 " Paste from the yank register, which only gets overwriten by yanking but
 " not deleting.
-nnoremap <leader>p "0p
-vnoremap <leader>p "0p
+nnoremap <unique> <leader>p "0p
+vnoremap <unique> <leader>p "0p
 
 " Switch CWD to the directory of the open buffer
-nnoremap <leader>cd :lcd %:p:h<CR>:pwd<CR>
+nnoremap <unique> <leader>cd :lcd %:p:h<CR>:pwd<CR>
 
 " Print current file's full name (including path)
-nnoremap <leader>fn :echo expand('%:p')<CR>
+nnoremap <unique> <leader>fn :echo expand('%:p')<CR>
 
 " Clear search register, stop highlighting current search text
-nnoremap <silent> <leader>c/ :let @/=""<CR>
+nnoremap <unique> <silent> <leader>c/ :let @/=""<CR>
 
 " Save the current window / tab
-nnoremap <C-s> :w<cr>
+nnoremap <unique> <C-s> :w<cr>
+" Conflicts with vim-surround
 inoremap <C-s> <ESC>:w<cr>
 
 " Some helpers to edit mode http://vimcasts.org/e/14
-cnoremap %% <C-r>=expand('%:h').'/'<CR>
+cnoremap %% <unique> <C-r>=expand('%:h').'/'<CR>
 " cabbr %% expand('%:p:h')
 
 " For wrap text using textwidth when formatting text
-nnoremap <leader>tw :setlocal formatoptions-=t<CR>
+nnoremap <unique> <leader>tw :setlocal formatoptions-=t<CR>
 
 " Adjust viewports to the same size
-nnoremap <leader>=w <C-w>=
+nnoremap <unique> <leader>=w <C-w>=
 
 " Write to files owned by root and is not opened with sudo
-cnoremap w!! w !sudo tee > /dev/null %
+cnoremap <unique> w!! w !sudo tee > /dev/null %
 
 " Improve completion popup menu
 " http://vim.wikia.com/wiki/Improve_completion_popup_menu
 " inoremap <expr> <Esc>      pumvisible() ? '\<C-e>' : '\<Esc>'
 " inoremap <expr> <CR>       pumvisible() ? '\<C-y>' : '\<CR>'
-inoremap <expr> <Down>     pumvisible() ? '\<C-n>' : '\<Down>'
-inoremap <expr> <Up>       pumvisible() ? '\<C-p>' : '\<Up>'
-inoremap <expr> <PageDown>
+inoremap <unique> <expr> <Down>     pumvisible() ? '\<C-n>' : '\<Down>'
+inoremap <unique> <expr> <Up>       pumvisible() ? '\<C-p>' : '\<Up>'
+inoremap <unique> <expr> <PageDown>
       \ pumvisible() ? '\<PageDown>\<C-p>\<C-n>' : '\<PageDown>'
-inoremap <expr> <PageUp>
+inoremap <unique> <expr> <PageUp>
       \ pumvisible() ? '\<PageUp>\<C-p>\<C-n>' : '\<PageUp>'
-inoremap <expr> <C-d> pumvisible() ? '\<PageDown>\<C-p>\<C-n>' : '\<C-d>'
-inoremap <expr> <C-u> pumvisible() ? '\<PageUp>\<C-p>\<C-n>' : '\<C-u>'
+inoremap <unique> <expr> <C-d> pumvisible() ? '\<PageDown>\<C-p>\<C-n>' : '\<C-d>'
+inoremap <unique> <expr> <C-u> pumvisible() ? '\<PageUp>\<C-p>\<C-n>' : '\<C-u>'
 
 " Identify the syntax highlighting group used at the cursor
-nnoremap <F9> :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name')
+nnoremap <unique> <F9> :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name')
       \ . '> trans<'
       \ . synIDattr(synID(line('.'),col('.'),0),'name') . '> lo<'
       \ . synIDattr(synIDtrans(synID(line('.'),col('.'),1)),'name') . '>'<CR>
 
 " Open all folds in the direct fold that contains current location
-nnoremap zO [zzczO<C-O>
+nnoremap <unique> zO [zzczO<C-O>
 
-nnoremap <leader>he :call myutils#HexHighlight()<CR>
-nnoremap <leader>ln :<C-u>execute 'call myutils#LocationNext()'<CR>
-nnoremap <leader>lp :<C-u>execute 'call myutils#LocationPrevious()'<CR>
-nnoremap <leader>tc :call myutils#ToggleColorColumn()<CR>
-nnoremap <leader>is :call myutils#FillWithCharTillN(' ', 80)<CR>
-noremap <leader>hl :call myutils#HighlightTooLongLines()<CR>
-vnoremap y y:call myutils#CopyText()<CR>
-nnoremap yy Vy
-vnoremap <leader>sn :call myutils#SortWords(' ', 1)<CR>
-vnoremap <leader>sw :call myutils#SortWords(' ', 0)<CR>
-vnoremap <leader>wf1 :WIF 1 0<CR>
-vnoremap <leader>wf2 :WIF 2 0<CR>
-vnoremap <leader>wf3 :WIF 3 0<CR>
-vnoremap <leader>wfi1 :WIF 1 1<CR>
-vnoremap <leader>wfi2 :WIF 2 1<CR>
-vnoremap <leader>wfi3 :WIF 3 1<CR>
+nnoremap <unique> <leader>he :call myutils#HexHighlight()<CR>
+nnoremap <unique> <leader>ln :<C-u>execute 'call myutils#LocationNext()'<CR>
+nnoremap <unique> <leader>lp :<C-u>execute 'call myutils#LocationPrevious()'<CR>
+nnoremap <unique> <leader>tc :call myutils#ToggleColorColumn()<CR>
+nnoremap <unique> <leader>is :call myutils#FillWithCharTillN(' ', 80)<CR>
+nnoremap <unique> <leader>hl :call myutils#HighlightTooLongLines()<CR>
+vnoremap <unique> <silent> y y:call myutils#CopyText()<CR>
+nnoremap <unique> yy Vy
+vnoremap <unique> <leader>sn :call myutils#SortWords(' ', 1)<CR>
+vnoremap <unique> <leader>sw :call myutils#SortWords(' ', 0)<CR>
+vnoremap <unique> <leader>wf1 :WIF 1 0<CR>
+vnoremap <unique> <leader>wf2 :WIF 2 0<CR>
+vnoremap <unique> <leader>wf3 :WIF 3 0<CR>
+vnoremap <unique> <leader>wfi1 :WIF 1 1<CR>
+vnoremap <unique> <leader>wfi2 :WIF 2 1<CR>
+vnoremap <unique> <leader>wfi3 :WIF 3 1<CR>
 
-noremap <leader>rf :<C-U>RangerChooser<CR>
+nnoremap <unique> <leader>rf :<C-U>RangerChooser<CR>
 
 if s:plugin.Flag('use_cmdwin')
-  nnoremap : q:i
+  nnoremap <unique> : q:i
 endif
 
 " Automatically jump to end of text pasted
-vnoremap <silent> Y y`]
-vnoremap <silent> P p`]
-nnoremap <silent> P p`]`
+vnoremap <unique> <silent> Y y`]
+vnoremap <unique> <silent> P p`]
+nnoremap <unique> <silent> P p`]`
 
 " Unsed {{{
 " Adding newline and stay in normal mode.
