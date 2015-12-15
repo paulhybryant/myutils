@@ -60,8 +60,8 @@ endif
 
 " Paste from the yank register, which only gets overwriten by yanking but
 " not deleting.
-nnoremap <leader>pp "0p
-vnoremap <leader>pp "0p
+nnoremap <leader>p "0p
+vnoremap <leader>p "0p
 
 " Switch CWD to the directory of the open buffer
 nnoremap <leader>cd :lcd %:p:h<CR>:pwd<CR>
@@ -119,7 +119,6 @@ nnoremap <leader>is :call myutils#FillWithCharTillN(' ', 80)<CR>
 noremap <leader>hl :call myutils#HighlightTooLongLines()<CR>
 vnoremap y y:call myutils#CopyText()<CR>
 nnoremap yy Vy
-" vnoremap y y:call myutils#CopyText()<CR>
 vnoremap <leader>sn :call myutils#SortWords(' ', 1)<CR>
 vnoremap <leader>sw :call myutils#SortWords(' ', 0)<CR>
 vnoremap <leader>wf1 :WIF 1 0<CR>
@@ -129,18 +128,16 @@ vnoremap <leader>wfi1 :WIF 1 1<CR>
 vnoremap <leader>wfi2 :WIF 2 1<CR>
 vnoremap <leader>wfi3 :WIF 3 1<CR>
 
-nnoremap <leader>rf :<C-U>RangerChooser<CR>
+noremap <leader>rf :<C-U>RangerChooser<CR>
 
 if s:plugin.Flag('use_cmdwin')
   nnoremap : q:i
 endif
 
-" Vim keymappings to avoid pinky kuckle pain
-" This is deprecated by swapping the ctrl and alt key using setxkbmap.
-" nnoremap d 
-" nnoremap u 
-" nmap s 
-" imap s 
+" Automatically jump to end of text pasted
+vnoremap <silent> Y y`]
+vnoremap <silent> P p`]
+nnoremap <silent> P p`]`
 
 " Unsed {{{
 " Adding newline and stay in normal mode.
@@ -159,10 +156,6 @@ endif
 " cab lc s#\C\(\u[a-z0-9]\+\\|[a-z0-9]\+\)\(\u\)#\l\1_\l\2#g
 " cab ua s#\(\%(\<\l\+\)\%(_\)\@=\)\\|_\(\l\)#\u\1\2#g
 
-" Mapping for quoting a string, <leader>qi (quote it)
-" noremap <leader>qi ciw"<C-r>""
-" noremap <leader>qs ciw'<C-r>"'
-
 " Make a simple 'search' text object
 " http://vim.wikia.com/wiki/Copy_or_change_search_hit
 " http://vimcasts.org/episodes/operating-on-search-matches-using-gn/
@@ -170,16 +163,4 @@ endif
     " \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
 " omap t :normal vt<CR>
 
-" Automatically jump to end of text pasted
-" vnoremap <silent> y y`]
-" vnoremap <silent> p p`]
-" nnoremap <silent> p p`]`
-
-" <leader>w= is mapped in Align.vim
-" <leader>w is used by CamelCaseMotion for moving
-" The mapping from Align make the motion slow because vim needs to wait for
-" some time in case '=' is pressed after <leader>w. Is that a better way to
-" avoid this?
-" silent! unmap <leader>w=
-" silent! unmap <leader>m=
 " }}}

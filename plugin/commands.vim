@@ -20,7 +20,9 @@ command! -nargs=+ MapToggleVar call myutils#MapToggleVar(<f-args>)
 
 command! -nargs=* -complete=file -bang E
       \ call myutils#MultiEdit('<bang>', <f-args>)
-command! -nargs=+ -complete=command DC call myutils#DechoCmd(<q-args>)
+
+command! -nargs=+ -complete=command DebugCmd call myutils#DechoCmd(<q-args>)
+
 command! -nargs=+ InsertRepeated call myutils#InsertRepeated(<f-args>)
 
 command! -range SortFolds <line1>,<line2>call myutils#SortFoldByFoldtext()
