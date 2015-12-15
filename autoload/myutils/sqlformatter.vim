@@ -4,7 +4,7 @@
 function! myutils#sqlformatter#GetSQLFormatter() abort
   let l:formatter = {
       \ 'name': 'sql-format',
-      \ 'setup_instructions': 'Install vim plugin SQLUtilities'}
+      \ 'setup_instructions': 'Install SQLUtilities (https://github.com/vim-scripts/SQLUtilities)'}
 
   function l:formatter.IsAvailable() abort
     return exists(':NeoBundle') && neobundle#is_sourced('SQLUtilities')
