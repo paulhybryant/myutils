@@ -78,7 +78,7 @@ nnoremap <unique> <C-s> :w<cr>
 inoremap <C-s> <ESC>:w<cr>
 
 " Some helpers to edit mode http://vimcasts.org/e/14
-cnoremap %% <unique> <C-r>=expand('%:h').'/'<CR>
+cnoremap <unique> %% <C-r>=expand('%:h').'/'<CR>
 " cabbr %% expand('%:p:h')
 
 " For wrap text using textwidth when formatting text
