@@ -140,6 +140,16 @@ vnoremap <unique> <silent> Y y`]
 vnoremap <unique> <silent> P p`]
 nnoremap <unique> <silent> P p`]`
 
+" Note that not all terminal sends this escape code for <C-Up> In fact most
+" terminals probably won't send anything different than <Up> For iterm2, one can
+" config this in the terminal preference. For other terminals, this should work
+" with .inputrc (may not)? If yes, for shells using readline.  For zsh which has
+" its own line editor, this can be configured using zsh's bindkey builtin.
+map [1;5A <C-Up>
+map [1;5A <C-Down>
+noremap <unique> <silent> <C-Up> :res +5<CR>
+noremap <unique> <silent> <C-Down> :res -5<CR>
+
 " Unsed {{{
 " Adding newline and stay in normal mode.
 " <S-Enter> is not reflected, maybe captured by the tmux binding
