@@ -397,7 +397,7 @@ function! myutils#Decho(msg) abort " {{{
   if !exists('g:decho_enable')
     let g:decho_enable = 0
   endif
-  if g:decho_enable
+  if g:decho_enable && exists(":Decho")
     Decho a:msg
   endif
 endfunction
