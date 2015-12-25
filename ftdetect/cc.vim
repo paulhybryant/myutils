@@ -1,1 +1,1 @@
-autocmd BufRead *.cc setlocal filetype=cpp
+autocmd BufNewFile,BufRead *.cc setf=cpp
