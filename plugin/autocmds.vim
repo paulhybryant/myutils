@@ -3,16 +3,9 @@ if !s:enter
   finish
 endif
 
-augroup FiletypeFormat
+augroup FileAu
   autocmd!
-  autocmd BufRead *.cc setlocal foldmethod=syntax
-  autocmd BufRead BUILD,*.log setlocal nospell
-  autocmd FileType vim
-    \ setlocal sw=2 ts=2 sts=2 et tw=80 foldlevel=0 foldmethod=marker nospell |
-    \ let g:vim_indent_cont = &sw
-  autocmd BufRead *.json setlocal filetype=json
-  autocmd FileType conf setlocal nospell
-  autocmd FileType vtd if ! &diff | execute 'VtdView' | execute 'normal A' | endif
+  autocmd BufRead *.log setlocal nospell
 augroup END
 
 autocmd BufEnter * call myutils#SyncNTTree()
