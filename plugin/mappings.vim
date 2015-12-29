@@ -92,16 +92,16 @@ cnoremap <unique> w!! w !sudo tee > /dev/null %
 
 " Improve completion popup menu
 " http://vim.wikia.com/wiki/Improve_completion_popup_menu
-" inoremap <expr> <Esc>      pumvisible() ? '\<C-e>' : '\<Esc>'
-" inoremap <expr> <CR>       pumvisible() ? '\<C-y>' : '\<CR>'
-inoremap <unique> <expr> <Down>     pumvisible() ? '\<C-n>' : '\<Down>'
-inoremap <unique> <expr> <Up>       pumvisible() ? '\<C-p>' : '\<Up>'
+" inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
+" inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
+inoremap <unique> <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <unique> <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
 inoremap <unique> <expr> <PageDown>
-      \ pumvisible() ? '\<PageDown>\<C-p>\<C-n>' : '\<PageDown>'
+      \ pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
 inoremap <unique> <expr> <PageUp>
-      \ pumvisible() ? '\<PageUp>\<C-p>\<C-n>' : '\<PageUp>'
-inoremap <unique> <expr> <C-d> pumvisible() ? '\<PageDown>\<C-p>\<C-n>' : '\<C-d>'
-inoremap <unique> <expr> <C-u> pumvisible() ? '\<PageUp>\<C-p>\<C-n>' : '\<C-u>'
+      \ pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
+inoremap <unique> <expr> <C-d> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<C-d>"
+inoremap <unique> <expr> <C-u> pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
 
 " Identify the syntax highlighting group used at the cursor
 nnoremap <unique> <F9> :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name')
