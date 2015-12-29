@@ -21,7 +21,7 @@ nnoremap <unique> gk k
 
 " Quickly move in a line.
 nnoremap <unique> H ^
-nnoremap <unique> L $
+nnoremap <unique> L \|
 
 " Concatenate two lines without whitespace at the end
 nnoremap <unique> J gJ
