@@ -1,9 +1,9 @@
 {
-  "name": "myutils",
+  "name": "vimutils",
   "description": "My vim utility functions",
   "version": "1.0.0",
   "author": "Yu Huang",
-  "repository": {"type": "git", "url": "git://github.com/paulhybryant/myutils"},
+  "repository": {"type": "git", "url": "git://github.com/paulhybryant/vimutils"},
   "dependencies": {
     "maktaba": {"type": "git", "url": "git://github.com/google/vim-maktaba"}
   }

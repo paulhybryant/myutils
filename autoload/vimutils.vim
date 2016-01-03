@@ -1,7 +1,7 @@
 " vim: set sw=2 ts=2 sts=2 et tw=78 foldlevel=0 foldmethod=marker filetype=vim nospell:
 
 " Returns true iff is NERDTree open/active
-function! myutils#IsNTOpen() abort " {{{
+function! vimutils#IsNTOpen() abort " {{{
   return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
 endfunction
 " }}}
@@ -9,8 +9,8 @@ endfunction
 
 " Calls NERDTreeFind iff NERDTree is active, current window contains a
 " modifiable file, and we're not in vimdiff
-function! myutils#SyncNTTree() abort " {{{
-  if &modifiable && myutils#IsNTOpen() && strlen(expand('%')) > 0 && !&diff
+function! vimutils#SyncNTTree() abort " {{{
+  if &modifiable && vimutils#IsNTOpen() && strlen(expand('%')) > 0 && !&diff
     if !exists('t:NERDTreeBufName') || bufname('%') != t:NERDTreeBufName
       NERDTreeFind
       wincmd p
@@ -21,7 +21,7 @@ endfunction
 
 
 " Sort words selected in visual mode in a single line, separated by space
-function! myutils#SortWords(delimiter, numeric) range abort " {{{
+function! vimutils#SortWords(delimiter, numeric) range abort " {{{
   if a:firstline != a:lastline
     echoerr "Can only sort words in a single line."
   endif
@@ -95,7 +95,7 @@ let s:tablinefns = {
       \ 'linux' : function('s:SetupTablineMappingForLinux'),
       \ 'windows' : function('s:SetupTablineMappingForWindows'),
       \ }
-function! myutils#SetupTablineMappings(OS)
+function! vimutils#SetupTablineMappings(OS)
   let l:os = ''
   if a:OS.is_mac
     let l:os = 'mac'
@@ -112,7 +112,7 @@ endfunction
 
 
 " Remove trailing whitespaces and ^M chars
-function! myutils#StripTrailingWhitespace() abort " {{{
+function! vimutils#StripTrailingWhitespace() abort " {{{
   " Preparation: save last search, and cursor position.
   let _s=@/
   let l = line(".")
@@ -128,7 +128,7 @@ endfunction
 
 " Allow using command :E to edit multiple files
 " Only files (not directories) matched by the glob pattern will be edited
-function! myutils#MultiEdit(really, ...) abort " {{{
+function! vimutils#MultiEdit(really, ...) abort " {{{
   if len(a:000)
     for globspec in a:000
       let l:files = split(glob(globspec), "\n")
@@ -352,7 +352,7 @@ endfunction
 " }}}
 
 " Highlight the hex string
-function! myutils#HexHighlight() abort " {{{
+function! vimutils#HexHighlight() abort " {{{
   if !((&t_Co == 256) || has("gui_running"))
     echo "t_Co must be set to 256 or vim must be in gui mode."
     return
@@ -393,7 +393,7 @@ endfunction
 
 
 " Wrapper for Decho to enable / disable it conveniently
-function! myutils#Decho(msg) abort " {{{
+function! vimutils#Decho(msg) abort " {{{
   if !exists('g:decho_enable')
     let g:decho_enable = 0
   endif
@@ -405,7 +405,7 @@ endfunction
 
 
 " Wrapper for Decho to echo debug information from a command execution
-function! myutils#DechoCmd(cmd) abort " {{{
+function! vimutils#DechoCmd(cmd) abort " {{{
   redir => l:msg
   silent execute a:cmd
   redir END
@@ -415,7 +415,7 @@ endfunction
 
 
 " Enable jumping using location list when only one error exists
-function! myutils#LocationPrevious() abort " {{{
+function! vimutils#LocationPrevious() abort " {{{
   try
     lprev
   catch /^Vim\%((\a\+)\)\=:E553/
@@ -423,7 +423,7 @@ function! myutils#LocationPrevious() abort " {{{
   endtry
 endfunction
 
-function! myutils#LocationNext()
+function! vimutils#LocationNext()
   try
     lnext
   catch /^Vim\%((\a\+)\)\=:E553/
@@ -434,7 +434,7 @@ endfunction
 
 
 " Insert charater char from current position until the cursor reaches column n
-function! myutils#FillWithCharTillN(char, n) abort " {{{
+function! vimutils#FillWithCharTillN(char, n) abort " {{{
   let l:col = getpos('.')[2]
   if l:col >= a:n
     return
@@ -453,7 +453,7 @@ endfunction
 " Display-altering option toggles
 " nnoremap <leader>ts :let &spell = !&spell<CR>
 " MapToggle <F2> spell
-function! myutils#MapToggle(key, opt) abort "  {{{
+function! vimutils#MapToggle(key, opt) abort "  {{{
   let l:cmd = ':set ' . a:opt . '! \| set ' . a:opt . "?\<CR>"
   exec 'nnoremap ' . a:key . ' ' . l:cmd
   exec 'inoremap ' . a:key . " \<C-O>" . l:cmd
@@ -463,7 +463,7 @@ endfunction
 
 " Map key to toggle global variable. Value 1 will be assigned if original
 " value is 0.
-function! myutils#MapToggleVar(key, var) abort " {{{
+function! vimutils#MapToggleVar(key, var) abort " {{{
   execute 'nnoremap ' . a:key . ' :call <SID>ToggleVar(' . a:var . ')<CR>'
 endfunction
 
@@ -480,7 +480,7 @@ endfunction
 
 
 " Highlight columns that is larger than textwidth
-function! myutils#HighlightTooLongLines() "  {{{
+function! vimutils#HighlightTooLongLines() "  {{{
   if !exists('b:htll') || b:htll == 0
     let b:htll = 1
     highlight def link RightMargin Error
@@ -499,7 +499,7 @@ endfunction
 
 
 " Highlight columns from 81 - 120 to red
-function! myutils#ToggleColorColumn() abort " {{{
+function! vimutils#ToggleColorColumn() abort " {{{
   if &colorcolumn
     let &colorcolumn = ""
   else
@@ -511,7 +511,7 @@ endfunction
 
 " Copy selected text to system clipboard and prevent it from clearing
 " clipboard when using ctrl+z
-function! myutils#CopyText() abort " {{{
+function! vimutils#CopyText() abort " {{{
   if &clipboard is# 'unnamedplus'
     let l:reg = getreg('+')
   else
@@ -531,7 +531,7 @@ endfunction
 
 
 " Insert repeated strings according to a pattern / template
-function! myutils#InsertRepeated(tmpl, lower, upper) abort " {{{
+function! vimutils#InsertRepeated(tmpl, lower, upper) abort " {{{
   let l:strs = split(a:tmpl, "%i", 1)
   for i in range(a:lower, a:upper)
     let l:str = join(l:strs, "" . i)
@@ -539,14 +539,14 @@ function! myutils#InsertRepeated(tmpl, lower, upper) abort " {{{
   endfor
 endfunction
 
-" function! myutils#InsertRepeated(tmpl, lower, upper)
+" function! vimutils#InsertRepeated(tmpl, lower, upper)
 " put =map(range(a:lower, a:upper), 'printf(''%d'', v:val)')
 " endfunction
 " }}}
 
 
 " Test whether a specific syntax group exists
-function! myutils#SyntaxGroupExists(group_name) abort " {{{
+function! vimutils#SyntaxGroupExists(group_name) abort " {{{
   let l:syntaxes=""
   redir => l:syntaxes
   silent syntax
@@ -557,7 +557,7 @@ endfunction
 
 
 " Get the definition of a syntax group
-function! myutils#GetSynGroup(group_name) abort " {{{
+function! vimutils#GetSynGroup(group_name) abort " {{{
   let l:syngroup=""
   redir => l:syngroup
   execute "silent! syntax list " . a:group_name
@@ -572,7 +572,7 @@ endfunction
 
 
 " Find the window among all windows that with w:id equals to wid
-function! myutils#FindWindowWithId(wid) abort " {{{
+function! vimutils#FindWindowWithId(wid) abort " {{{
   for tabnr in range(1, tabpagenr('$'))
     for winnr in range(1, tabpagewinnr(tabnr, '$'))
       if gettabwinvar(tabnr, winnr, 'id') is a:wid
@@ -586,7 +586,7 @@ endfunction
 
 
 " Converts a file with MS-DOS line ending to UNIX line ending
-function! myutils#Dos2unixFunction() abort "{{{
+function! vimutils#Dos2unixFunction() abort "{{{
   let _s=@/
   let l = line(".")
   let c = col(".")
@@ -604,7 +604,7 @@ endfun
 
 
 " Initialization directories and settings for undo, swap and views.
-function! myutils#InitUndoSwapViews() abort " {{{
+function! vimutils#InitUndoSwapViews() abort " {{{
   let l:prefix = expand('~/.vim/')
   let l:dir_list = {
         \ '.vimbackup' : 'backupdir',
@@ -635,7 +635,7 @@ endfunction
 
 
 " Wrap the visually selected text in folds
-function! myutils#WrapInFold(fid, insert) range abort " {{{
+function! vimutils#WrapInFold(fid, insert) range abort " {{{
   let l:line = getline(a:firstline)
   execute 'normal ' . a:firstline . 'GO'
   let l:indent = matchstr(l:line, '\v^\zs(\s*)\zeNeoBundle')
@@ -658,7 +658,7 @@ endfunction
 
 " Sort a set of folded text blocks by its foldtext. Only sorts the top level
 " folds. The folds must be all closed when this is called.
-function! myutils#SortFoldByFoldtext() range abort " {{{
+function! vimutils#SortFoldByFoldtext() range abort " {{{
   execute (a:firstline) . ',' . (a:lastline) . 'foldopen!'
   execute (a:firstline) . ',' . (a:lastline) . 'foldclose'
   let l:folds = s:GetFolds(a:firstline, a:lastline)
@@ -699,7 +699,7 @@ endfunction
 
 " Use ranger as a file chooser in vim
 " source: https://github.com/hut/ranger/blob/master/examples/vim_file_chooser.vim
-function! myutils#RangerChooser() abort
+function! vimutils#RangerChooser() abort
   let temp = tempname()
   " The option "--choosefiles" was added in ranger 1.5.1. Use the next line
   " with ranger 1.4.2 through 1.5.0 instead.

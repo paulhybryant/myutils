@@ -1,4 +1,4 @@
-myutils
+vimutils
 ==========
 
 My vim utility functions.

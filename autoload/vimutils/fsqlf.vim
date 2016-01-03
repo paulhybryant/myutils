@@ -1,7 +1,7 @@
 ""
 " @private
 " Formatter: fsqlf
-function! myutils#fsqlf#GetSQLFormatter() abort
+function! vimutils#fsqlf#GetSQLFormatter() abort
   let l:formatter = {
       \ 'name': 'fsqlf',
       \ 'setup_instructions': 'Install fsqlf (https://github.com/dnsmkl/fsqlf)'}

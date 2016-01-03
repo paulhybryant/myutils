@@ -8,7 +8,7 @@ augroup FileAu
   autocmd BufRead *.log setlocal nospell
 augroup END
 
-autocmd BufEnter * call myutils#SyncNTTree()
+autocmd BufEnter * call vimutils#SyncNTTree()
 
 if s:plugin.Flag('use_cmdwin')
   augroup CmdWin

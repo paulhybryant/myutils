@@ -1,8 +1,8 @@
-let s:plugin = maktaba#plugin#Get('myutils')
+let s:plugin = maktaba#plugin#Get('vimutils')
 
 let s:buffers = []
 
-function! myutils#bufclose#BufcloseUncloseIt() " {{{
+function! vimutils#bufclose#BufcloseUncloseIt() " {{{
   if len(s:buffers) > 0
     let [l:num, l:name] = remove(s:buffers, 0)
     exec 'badd ' . l:name
@@ -13,7 +13,7 @@ endfunction
 
 " Confirm saving buffers before it is closed and quit vim if the closed buffer
 " is the last buffer.
-function! myutils#bufclose#BufcloseCloseIt(confirm) " {{{
+function! vimutils#bufclose#BufcloseCloseIt(confirm) " {{{
   " Whether the current window is the NERDTree window
   if exists('b:NERDTreeType')
     NERDTreeToggle

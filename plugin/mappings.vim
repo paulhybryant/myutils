@@ -4,7 +4,7 @@ if !s:enter
 endif
 
 " Send the content in register with OCS52 control sequence.
-vnoremap <unique> <C-c> y:call myutils#osc52#SendViaOSC52(getreg('"'))<CR>
+vnoremap <unique> <C-c> y:call vimutils#osc52#SendViaOSC52(getreg('"'))<CR>
 
 " Use <C-Q> to close buffer window quickly.
 inoremap <unique> <silent> <C-q> <ESC>:Bclose<cr>
@@ -112,16 +112,16 @@ nnoremap <unique> <F9> :echo 'hi<' . synIDattr(synID(line('.'),col('.'),1),'name
 " Open all folds in the direct fold that contains current location
 nnoremap <unique> zO [zzczO<C-O>
 
-nnoremap <unique> <leader>he :call myutils#HexHighlight()<CR>
-nnoremap <unique> <leader>ln :<C-u>execute 'call myutils#LocationNext()'<CR>
-nnoremap <unique> <leader>lp :<C-u>execute 'call myutils#LocationPrevious()'<CR>
-nnoremap <unique> <leader>tc :call myutils#ToggleColorColumn()<CR>
-nnoremap <unique> <leader>is :call myutils#FillWithCharTillN(' ', 80)<CR>
-nnoremap <unique> <leader>hl :call myutils#HighlightTooLongLines()<CR>
-vnoremap <unique> <silent> y y:call myutils#CopyText()<CR>
+nnoremap <unique> <leader>he :call vimutils#HexHighlight()<CR>
+nnoremap <unique> <leader>ln :<C-u>execute 'call vimutils#LocationNext()'<CR>
+nnoremap <unique> <leader>lp :<C-u>execute 'call vimutils#LocationPrevious()'<CR>
+nnoremap <unique> <leader>tc :call vimutils#ToggleColorColumn()<CR>
+nnoremap <unique> <leader>is :call vimutils#FillWithCharTillN(' ', 80)<CR>
+nnoremap <unique> <leader>hl :call vimutils#HighlightTooLongLines()<CR>
+vnoremap <unique> <silent> y y:call vimutils#CopyText()<CR>
 nnoremap <unique> yy Vy
-vnoremap <unique> <leader>sn :call myutils#SortWords(' ', 1)<CR>
-vnoremap <unique> <leader>sw :call myutils#SortWords(' ', 0)<CR>
+vnoremap <unique> <leader>sn :call vimutils#SortWords(' ', 1)<CR>
+vnoremap <unique> <leader>sw :call vimutils#SortWords(' ', 0)<CR>
 vnoremap <unique> <leader>wf1 :WIF 1 0<CR>
 vnoremap <unique> <leader>wf2 :WIF 2 0<CR>
 vnoremap <unique> <leader>wf3 :WIF 3 0<CR>

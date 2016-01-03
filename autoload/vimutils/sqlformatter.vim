@@ -1,7 +1,7 @@
 ""
 " @private
 " Formatter: SQLUtilities
-function! myutils#sqlformatter#GetSQLFormatter() abort
+function! vimutils#sqlformatter#GetSQLFormatter() abort
   let l:formatter = {
       \ 'name': 'sql-format',
       \ 'setup_instructions': 'Install SQLUtilities (https://github.com/vim-scripts/SQLUtilities)'}
