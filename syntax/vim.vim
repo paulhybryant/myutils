@@ -5,7 +5,7 @@ function! GetVimFoldText()
   if l:firstline =~# '\v^\s*" \{\{\{[0-9]$'
     let l:secondline = getline(v:foldstart + 1)
     if l:secondline =~# '\v^\s*NeoBundle'
-      if l:secondline =~# '\v.*\{$'
+      if l:secondline =~# '\v.*\{|\.$'
         for i in range(v:foldstart + 1, v:foldend)
           let l:commentline = getline(i)
           if l:commentline =~# '\v^\s*\\ \}'
