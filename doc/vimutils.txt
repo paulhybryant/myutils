@@ -1,0 +1,36 @@
+*vimutils.txt*	My vim utility functions
+Yu Huang                                                            *vimutils*
+
+==============================================================================
+CONTENTS                                                   *vimutils-contents*
+  1. Configuration...........................................|vimutils-config|
+
+==============================================================================
+CONFIGURATION                                                *vimutils-config*
+
+This plugin uses maktaba flags for configuration. Install Glaive
+(https://github.com/google/glaive) and use the |:Glaive| command to configure
+them.
+
+                                                *vimutils:bufclose_skip_types*
+Exit vim if all existing buffers is one of these types
+Default: [] `
+
+                                                         *vimutils:use_cmdwin*
+Use cmdline-window to replace command mode
+Default: 0 `
+
+                                                   *vimutils:plugin[autocmds]*
+Configures whether plugin/autocmds.vim should be loaded.
+Default: 1 `
+
+                                                   *vimutils:plugin[commands]*
+Configures whether plugin/commands.vim should be loaded.
+Default: 1 `
+
+                                                   *vimutils:plugin[mappings]*
+Configures whether plugin/mappings.vim should be loaded.
+Default: 0 `
+
+
+vim:tw=78:ts=8:ft=help:norl:
