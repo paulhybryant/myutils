@@ -41,8 +41,8 @@ endfunction
 " }}}
 
 
-" Functions for settping up tabline mappsing for different OSes
-function! s:SetupTablineMappingForMac() abort " {{{
+" Functions for settping up tabline mappsing for different OSes {{{
+function! s:SetupTablineMappingForMac() abort
   silent! nmap <silent> <unique> ¡ <Plug>AirlineSelectTab1
   silent! nmap <silent> <unique> ™ <Plug>AirlineSelectTab2
   silent! nmap <silent> <unique> £ <Plug>AirlineSelectTab3
@@ -54,7 +54,7 @@ function! s:SetupTablineMappingForMac() abort " {{{
   silent! nmap <silent> <unique> ª <Plug>AirlineSelectTab9
 endfunction
 
-function! s:SetupTablineMappingForLinux()
+function! s:SetupTablineMappingForLinux() abort
   if has('gui_running')
     silent! nmap <silent> <unique> <M-1> <Plug>AirlineSelectTab1
     silent! nmap <silent> <unique> <M-2> <Plug>AirlineSelectTab2
@@ -78,7 +78,7 @@ function! s:SetupTablineMappingForLinux()
   endif
 endfunction
 
-function! s:SetupTablineMappingForWindows()
+function! s:SetupTablineMappingForWindows() abort
   silent! nmap <silent> <unique> ± <Plug>AirlineSelectTab1
   silent! nmap <silent> <unique> ² <Plug>AirlineSelectTab2
   silent! nmap <silent> <unique> ³ <Plug>AirlineSelectTab3

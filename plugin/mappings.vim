@@ -35,8 +35,9 @@ vnoremap <unique> > >gv
 nnoremap <unique> <C-b> <C-v>
 
 " Use C-b to enter literal inputs in command mode
-cnoremap <unique> <C-b> <C-v>
-inoremap <unique> <C-b> <C-v>
+" Override the mapping from vim-rsi
+cnoremap <C-b> <C-v>
+inoremap <C-b> <C-v>
 
 " Use C-v to paste, this is needed in GVIM. In terminal vim this is handled by
 " the terminal already. If not that will also be captured by this mapping.
@@ -100,7 +101,7 @@ inoremap <unique> <expr> <PageDown>
       \ pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
 inoremap <unique> <expr> <PageUp>
       \ pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
-inoremap <unique> <expr> <C-d> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<C-d>"
+inoremap <expr> <C-d> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<C-d>"
 inoremap <unique> <expr> <C-u> pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
 
 " Identify the syntax highlighting group used at the cursor
