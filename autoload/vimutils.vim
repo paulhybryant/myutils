@@ -518,7 +518,8 @@ function! vimutils#CopyText() abort " {{{
     let l:reg = getreg('*')
   endif
   " Preserve single quotes
-  let l:reg = substitute(l:reg, "'", "'\"'\"'", "g")
+  let l:reg = substitute(l:reg, "'", "'\"'\"'", 'g')
+  let l:reg = substitute(l:reg, '%', '%%', 'g')
   " let l:reg = shellescape(substitute(l:reg, "\x0a", "", ""))
   " let l:cmd = '/bin/echo -n -- ''' . l:reg . ''' | xclipper -selection clipboard -i'
   " Printf is more portable, echo can be either a shell built-in or a binary.

@@ -24,7 +24,7 @@ function! vimutils#fsqlf#GetSQLFormatter() abort
       return
     endif
 
-    let l:cmd = 'fsqlf'
+    let l:cmd = 'fsqlf --select-comma-newline after --keyword-case upper'
     let l:lines = getline(1, line('$'))
     for [l:startline, l:endline] in a:ranges
       call maktaba#ensure#IsNumber(l:startline)
