@@ -119,7 +119,15 @@ nnoremap <unique> <leader>lp :<C-u>execute 'call vimutils#LocationPrevious()'<CR
 nnoremap <unique> <leader>tc :call vimutils#ToggleColorColumn()<CR>
 nnoremap <unique> <leader>is :call vimutils#FillWithCharTillN(' ', 80)<CR>
 nnoremap <unique> <leader>hl :call vimutils#HighlightTooLongLines()<CR>
-vnoremap <unique> <silent> y y:call vimutils#CopyText()<CR>
+" vnoremap <unique> <silent> y y:call vimutils#CopyText()<CR>
+" copy the current text selection to the system clipboard
+if has('gui_running') || has('nvim') && exists('$DISPLAY')
+  noremap <Leader>y "+y
+else
+  " copy to attached terminal using the yank(1) script:
+  " https://github.com/sunaku/home/blob/master/bin/yank
+  noremap <silent> <Leader>y y:call system('yank > /dev/tty', @0)<Return>
+endif
 nnoremap <unique> yy Vy
 vnoremap <unique> <leader>sn :call vimutils#SortWords(' ', 1)<CR>
 vnoremap <unique> <leader>sw :call vimutils#SortWords(' ', 0)<CR>
