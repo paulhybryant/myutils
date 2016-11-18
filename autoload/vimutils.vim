@@ -731,3 +731,12 @@ function! vimutils#RangerChooser() abort
   redraw!
 endfunction
 " }}}
+
+function! vimutils#ForEach(fn) range abort
+  let l:col_l = col("'<") - 1
+  let l:col_r = col("'>") - 1
+  for l in range(a:firstline, a:lastline)
+    let l:line = getline(l)
+    exec a:fn . ' "' l:line[l:col_l:l:col_r] . '"'
+  endfor
+endfunction
