@@ -159,6 +159,13 @@ map [1;5A <C-Down>
 noremap <unique> <silent> <C-Up> :res +5<CR>
 noremap <unique> <silent> <C-Down> :res -5<CR>
 
+" Search with the visually selected rather
+vnoremap / <ESC>/\%V
+vnoremap ? <ESC>?\%V
+" More from http://vim.wikia.com/wiki/Search_only_over_a_visual_range
+" vnoremap / <Esc>/\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
+" vnoremap ? <Esc>?\%><C-R>=line("'<")-1<CR>l\%<<C-R>=line("'>")+1<CR>l
+
 " Unsed {{{
 " Adding newline and stay in normal mode.
 " <S-Enter> is not reflected, maybe captured by the tmux binding
