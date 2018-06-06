@@ -42,3 +42,6 @@ camelcase
 timestamp
 const
 RPC
+tugela
+json
+deps
